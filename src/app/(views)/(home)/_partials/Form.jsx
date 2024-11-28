@@ -1,5 +1,6 @@
 "use client";
 
+import { Toast } from "@/app/components/Toast";
 import { useState, useEffect } from "react";
 
 export default function Form() {
@@ -86,15 +87,23 @@ export default function Form() {
     }
 
     try {
-      await fetch("http://localhost:3000/api/reports", {
+      const res = await fetch("http://localhost:3000/api/reports", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
         },
         body: JSON.stringify(sendData),
       });
+
+      if (res.ok) {
+        Toast('success', 'Laporan behasil dikirim');
+        setForm({fullname: "", whatsapp: "", province: "", regency: "", district: "", detail: "", photo: ""});
+      } else {
+        Toast('error', 'Terjadi masalah, laporan gagal dikirim');
+      }
     } catch (err) {
-      console.log('Gagal submit!')
+      console.log('Gagal submit!');
+      Toast('error', 'Terjadi masalah, laporan gagal dikirim')
     }
   };
 
