@@ -1,12 +1,12 @@
 "use client";
 
 import { Toast } from "@/app/components/Toast";
-import { useState, useEffect } from "react";
+import { useState } from "react";
+import ProvincesSelector from "./ProvincesSelector";
+import RegenciesSelector from "./RegenciesSelector";
+import DistrictsSelector from "./DistrictsSelector";
 
 export default function Form() {
-  const [getProvinces, setProvinces] = useState([]);
-  const [getRegencies, setRegencies] = useState([]);
-  const [getDistricts, setDistricts] = useState([]);
   const [form, setForm] = useState({
     fullname: "",
     whatsapp: "",
@@ -16,75 +16,67 @@ export default function Form() {
     detail: "",
     photo: "",
   });
+  const [uploading, setUploading] = useState(false);
+  const [file, setFile] = useState(null);
+  const [fileAccepted, setFileAccepted] = useState(false);
 
-  // Provinsi
-  useEffect(() => {
-    fetch('https://api.cahyadsn.com/provinces', {
-      method: "GET", 
-      headers: {
-        "Content-Type": "application/json",
-      }})
-      .then((res) => res.json())
-      .then((data) => {
-        if (data.data) {
-          setProvinces(data.data);
-        }
-      })
-      .catch((err) => {
-        console.log(err);
-      });
-  }, []);
-
-  // Kota/Kabupaten
-  useEffect(() => {
-    if (!form.province) return;
-    fetch(`https://api.cahyadsn.com/regencies/${form.province}`, {
-      method: "GET", 
-      headers: {
-        "Content-Type": "application/json",
-      }})
-      .then((res) => res.json())
-      .then((data) => {
-        if (data.data) {
-          setRegencies(data.data);
-        }
-      })
-      .catch((err) => {
-        console.log(err);
-      });
-  }, [form.province]);
-
-  // Kecamatan
-  useEffect(() => {
-    if (!form.regency) return;
-    fetch(`https://api.cahyadsn.com/districts/${form.regency}`, {
-      method: "GET", 
-      headers: {
-        "Content-Type": "application/json",
-      }})
-      .then((res) => res.json())
-      .then((data) => {
-        if (data.data) {
-          setDistricts(data.data);
-        }
-      })
-      .catch((err) => {
-        console.log(err);
-      });
-  }, [form.regency]);
+  const generateRandomText = () => {
+    return Math.random().toString(36).substring(2, 10); // Contoh teks acak
+  };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
 
+    // Step 1: Upload the image if a file is provided
+    let photoUrl = form.photo;
+
+    if (file) {
+      const formData = new FormData();
+      const randomText = generateRandomText();
+      const originalFileName = file.name;
+      const newFileName = `${randomText}_${originalFileName}`;
+
+      formData.append("image", file, newFileName);
+
+      try {
+        setUploading(true);
+        const response = await fetch(
+          "https://api.imgbb.com/1/upload?key=9a2571e78da633ce85f7cfb7b647f0b0",
+          {
+            method: "POST",
+            body: formData,
+          }
+        );
+
+        const data = await response.json();
+        if (data.success) {
+          // Potong string response URL pada slash ketiga
+          const originalUrl = data.data.url; // Contoh: https://i.ibb.co/2ndCYJK/c1f64245afb2.jpg
+          const splitUrl = originalUrl.split("/").slice(3).join("/"); // Hasil: 2ndCYJK/c1f64245afb2.jpg
+          photoUrl = `https://i.ibb.co.com/${splitUrl}`; // Gabungkan dengan domain baru
+        } else {
+          Toast("error", "Gagal mengunggah gambar.");
+          return; // Stop jika gagal upload
+        }
+      } catch (error) {
+        console.error("Error uploading image:", error);
+        Toast("error", "Terjadi kesalahan saat mengunggah gambar.");
+        return;
+      } finally {
+        setUploading(false);
+      }
+    }
+
+    // Step 2: Send the form data including the uploaded image URL
     const sendData = {
       fullname: form.fullname,
-      whatsapp: form.whatsapp,
-      province: form.province, 
-      regency: form.regency, 
-      district: form.district, 
+      whatsapp: "62" + form.whatsapp,
+      province: form.province,
+      regency: form.regency,
+      district: form.district,
       detail: form.detail,
-      photo: 'https://images.hukumonline.com/frontend/lt5a954764bab1a/lt5a954d70cd9dd.jpg'
-    }
+      photo: photoUrl,
+    };
 
     try {
       const res = await fetch("http://localhost:3000/api/reports", {
@@ -96,14 +88,24 @@ export default function Form() {
       });
 
       if (res.ok) {
-        Toast('success', 'Laporan behasil dikirim');
-        setForm({fullname: "", whatsapp: "", province: "", regency: "", district: "", detail: "", photo: ""});
+        Toast("success", "Laporan berhasil dikirim");
+        setForm({
+          fullname: "",
+          whatsapp: "",
+          province: "",
+          regency: "",
+          district: "",
+          detail: "",
+          photo: "",
+        });
+        setFile(null); // Reset file
+        setFileAccepted(false); // Reset file accepted message
       } else {
-        Toast('error', 'Terjadi masalah, laporan gagal dikirim');
+        Toast("error", "Terjadi masalah, laporan gagal dikirim");
       }
     } catch (err) {
-      console.log('Gagal submit!');
-      Toast('error', 'Terjadi masalah, laporan gagal dikirim')
+      console.log("Gagal submit!");
+      Toast("error", "Terjadi masalah, laporan gagal dikirim");
     }
   };
 
@@ -111,89 +113,92 @@ export default function Form() {
     <section>
       <form onSubmit={handleSubmit}>
         <div className="form-container bg-slate-50 shadow-lg -mt-14 mx-4 p-4 flex flex-col gap-3 md:-mt-9 md:mx-32 md:shadow-2xl lg:mx-72 lg:py-6 lg:px-8">
-          <div className='bg-slate-800 p-3 text-white font-semibold text-center md:text-lg'>
-            Isi Laporan Anda !
+          <div className="bg-slate-800 p-3 text-white font-semibold text-center md:text-lg">
+            Isi Laporan Anda!
           </div>
-          <input 
-            type="text" 
-            placeholder='Masukkan Nama Anda' 
-            required 
-            value={form.fullname} 
-            onChange={(e) => setForm({ ...form, fullname: e.target.value })} 
-            className='p-3 border border-gray-400 bg-transparent'/>
+          <input
+            type="text"
+            placeholder="Masukkan Nama Anda"
+            required
+            value={form.fullname}
+            onChange={(e) => setForm({ ...form, fullname: e.target.value })}
+            className="p-3 border border-gray-400 bg-transparent"
+          />
 
-          <input 
-            type="number" 
-            placeholder='Masukkan Nomor Whatsapp' 
-            required 
-            value={form.whatsapp}
-            onChange={(e) => setForm({ ...form, whatsapp: e.target.value })}
-            className='p-3 border border-gray-400 bg-transparent'/>
+          <div className="grid grid-cols-12">
+            <div className="col-span-1 p-3 text-center border-l border-y border-gray-400 bg-gray-100 text-gray-600">
+              +62
+            </div>
+            <input
+              type="number"
+              placeholder="Masukkan Nomor Whatsapp"
+              required
+              value={form.whatsapp}
+              onChange={(e) => setForm({ ...form, whatsapp: e.target.value })}
+              className="col-span-11 p-3 border border-gray-400 bg-transparent"
+            />
+          </div>
 
-          <select 
-            value={form.province}
-            onChange={(e) => {setForm({ ...form, province: e.target.value })}} 
-            className='p-3 border border-gray-400 bg-transparent'
+          <ProvincesSelector
+            onChange={(province) => setForm({ ...form, province })}
+          />
+
+          <RegenciesSelector
+            provinceCode={form.province}
+            onChange={(regency) => setForm({ ...form, regency })}
+          />
+
+          <DistrictsSelector
+            regencyCode={form.regency}
+            onChange={(district) => setForm({ ...form, district })}
+          />
+
+          <textarea
+            rows="6"
+            placeholder="Tambahkan detail lokasi seperti bangunan, nama jalan, dan sebagainya"
+            value={form.detail}
+            onChange={(e) => setForm({ ...form, detail: e.target.value })}
+            className="p-3 border border-gray-400 bg-transparent"
+          ></textarea>
+
+          <label
+            htmlFor="photo"
+            className="bg-container cursor-pointer rounded-2xl flex justify-center items-center flex-col bg-gray-500 py-10 text-white md:py-20"
           >
-              <option value="">== Provinsi ==</option>
-              {getProvinces.map((province) => (
-                <option key={province.kode} value={province.kode}>{province.nama}</option>
-              ))}
-          </select>
-
-          <select 
-            value={form.regency} 
-            onChange={(e) => {setForm({ ...form, regency: e.target.value })}} 
-            className='p-3 border border-gray-400 bg-transparent'
-          >
-            <option value="">== Kota/Kabupaten ==</option>
-            {getRegencies.map((regency) => (
-              <option key={regency.kode} value={regency.kode}>{regency.nama}</option>
-            ))}
-          </select>
-          
-          <select 
-            value={form.district} 
-            onChange={(e) => {setForm({ ...form, district: e.target.value })}} 
-            className='p-3 border border-gray-400 bg-transparent'
-          >
-            <option value="">== Kecamatan ==</option>
-            {getDistricts.map((district) => (
-              <option key={district.kode} value={district.kode}>
-                {district.nama}
-              </option>
-            ))}
-          </select>
-
-          <textarea 
-              name="" 
-              id="" 
-              rows="6" 
-              placeholder='Tambahkan Detail Bila Diperlukan' 
-              value={form.detail}
-              onChange={(e) => setForm({ ...form, detail: e.target.value })}
-              className='p-3 border border-gray-400 bg-transparent'>
-          </textarea>
-
-          <label htmlFor="photo" className='bg-container cursor-pointer rounded-2xl flex justify-center items-center flex-col bg-gray-500 py-10 text-white md:py-20'>
-            <svg xmlns="http://www.w3.org/2000/svg" width="38" height="38" fill="currentColor" className="bi bi-image-fill" viewBox="0 0 16 16">
-              <path d="M.002 3a2 2 0 0 1 2-2h12a2 2 0 0 1 2 2v10a2 2 0 0 1-2 2h-12a2 2 0 0 1-2-2zm1 9v1a1 1 0 0 0 1 1h12a1 1 0 0 0 1-1V9.5l-3.777-1.947a.5.5 0 0 0-.577.093l-3.71 3.71-2.66-1.772a.5.5 0 0 0-.63.062zm5-6.5a1.5 1.5 0 1 0-3 0 1.5 1.5 0 0 0 3 0"/>
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              width="38"
+              height="38"
+              fill="currentColor"
+              className="bi bi-image-fill"
+              viewBox="0 0 16 16"
+            >
+              <path d="M.002 3a2 2 0 0 1 2-2h12a2 2 0 0 1 2 2v10a2 2 0 0 1-2 2h-12a2 2 0 0 1-2-2zm1 9v1a1 1 0 0 0 1 1h12a1 1 0 0 0 1-1V9.5l-3.777-1.947a.5.5 0 0 0-.577.093l-3.71 3.71-2.66-1.772a.5.5 0 0 0-.63.062zm5-6.5a1.5 1.5 0 1 0-3 0 1.5 1.5 0 0 0 3 0" />
             </svg>
-            <p className='text-sm mt-2'>Lampirkan Foto Sebagai Bukti</p>
+            <p className="text-sm mt-2">
+              {!fileAccepted ? 'Lampirkan Foto Sebagai Bukti' : 'File Diterima'}
+            </p>
           </label>
 
-          <input type="file" id='photo' className='hidden'/>
+          <input
+            type="file"
+            id="photo"
+            className="hidden"
+            onChange={(e) => {
+              const selectedFile = e.target.files[0];
+              setFile(selectedFile);
+              setFileAccepted(!!selectedFile); // Tampilkan pesan jika file diterima
+            }}
+          />
 
-          <button type='submit' 
-            className='relative p-3 text-white overflow-hidden bg-slate-800 
-            before:absolute before:py-20 before:px-40 before:w-[140%] before:-left-[60rem] before:-top-8 before:rounded-[5rem] before:bg-slate-700
-            hover:before:-left-16 hover:before:top-0 hover:before:text-black hover:before:duration-700 hover:before:ease-in-out hover:before:-z-10
-            hover:z-10
-            md:before:-left-[100rem] lg:before:duration-1000'>
-            LAPORKAN
+          <button
+            type="submit"
+            className="relative p-3 text-white overflow-hidden bg-slate-800"
+          >
+            {!uploading ? 'LAPORKAN' : 'Tunggu sebentar...'}
           </button>
         </div>
       </form>
     </section>
-  )
+  );
 }

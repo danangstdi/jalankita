@@ -1,7 +1,7 @@
-import { getData } from "@/app/sevices/getData"
 import ImgZoom from "./ImgZoom";
 import Detail from "./Detail";
 import DropdownStatus from "./DropdownStatus";
+import { getDataNoCache } from "@/app/sevices/getDataNoCache";
 
 async function fetchLocationName(id, type) {
   const apiUrls = {
@@ -20,7 +20,7 @@ async function fetchLocationName(id, type) {
 }
 
 export default async function Table() {
-  const getReports = await getData('http://localhost:3000/api/reports');
+  const getReports = await getDataNoCache('http://localhost:3000/api/reports');
   const reports = getReports.data;
 
   const reportsWithLocationNames = await Promise.all(
