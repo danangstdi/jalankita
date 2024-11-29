@@ -21,13 +21,12 @@ export default function Form() {
   const [fileAccepted, setFileAccepted] = useState(false);
 
   const generateRandomText = () => {
-    return Math.random().toString(36).substring(2, 10); // Contoh teks acak
+    return Math.random().toString(36).substring(2, 10);
   };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
 
-    // Step 1: Upload the image if a file is provided
     let photoUrl = form.photo;
 
     if (file) {
@@ -50,13 +49,12 @@ export default function Form() {
 
         const data = await response.json();
         if (data.success) {
-          // Potong string response URL pada slash ketiga
-          const originalUrl = data.data.url; // Contoh: https://i.ibb.co/2ndCYJK/c1f64245afb2.jpg
-          const splitUrl = originalUrl.split("/").slice(3).join("/"); // Hasil: 2ndCYJK/c1f64245afb2.jpg
-          photoUrl = `https://i.ibb.co.com/${splitUrl}`; // Gabungkan dengan domain baru
+          const originalUrl = data.data.url;
+          const splitUrl = originalUrl.split("/").slice(3).join("/");
+          photoUrl = `https://i.ibb.co.com/${splitUrl}`;
         } else {
           Toast("error", "Gagal mengunggah gambar.");
-          return; // Stop jika gagal upload
+          return;
         }
       } catch (error) {
         console.error("Error uploading image:", error);
@@ -67,7 +65,6 @@ export default function Form() {
       }
     }
 
-    // Step 2: Send the form data including the uploaded image URL
     const sendData = {
       fullname: form.fullname,
       whatsapp: "62" + form.whatsapp,
@@ -98,8 +95,8 @@ export default function Form() {
           detail: "",
           photo: "",
         });
-        setFile(null); // Reset file
-        setFileAccepted(false); // Reset file accepted message
+        setFile(null);
+        setFileAccepted(false);
       } else {
         Toast("error", "Terjadi masalah, laporan gagal dikirim");
       }
@@ -187,7 +184,7 @@ export default function Form() {
             onChange={(e) => {
               const selectedFile = e.target.files[0];
               setFile(selectedFile);
-              setFileAccepted(!!selectedFile); // Tampilkan pesan jika file diterima
+              setFileAccepted(!!selectedFile);
             }}
           />
 

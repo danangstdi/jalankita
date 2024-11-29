@@ -6,7 +6,7 @@ CREATE TABLE `reports` (
     `province` VARCHAR(255) NOT NULL,
     `regency` VARCHAR(255) NOT NULL,
     `district` VARCHAR(255) NOT NULL,
-    `detail` VARCHAR(191) NULL,
+    `detail` TEXT NOT NULL,
     `photo` VARCHAR(255) NOT NULL,
     `reportStatus` ENUM('PENDING', 'PROGRESS', 'RESOLVED', 'REJECTED') NOT NULL DEFAULT 'PENDING',
     `reportAt` DATETIME(3) NOT NULL DEFAULT CURRENT_TIMESTAMP(3),

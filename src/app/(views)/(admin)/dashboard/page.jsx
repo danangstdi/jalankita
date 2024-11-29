@@ -1,9 +1,9 @@
-import { getData } from "@/app/sevices/getData"
 import DashboardNav from "../_partials/DashboardNav"
 import StatsCard from "./_partials/StatsCard"
+import { getDataNoCache } from "@/app/sevices/getDataNoCache"
 
 export default async function Dashboard() {
-  const total = await getData('http://localhost:3000/api/reports')
+  const total = await getDataNoCache('http://localhost:3000/api/reports')
 
   return (
     <>

@@ -8,7 +8,7 @@ export default function ImgZoom(props) {
   return (
     <>
       <div onClick={() => setIsZoom(!isZoom)} className="w-10 h-10 md:w-16 md:h-16 overflow-hidden hover:cursor-pointer">
-        <img src={props.photo} className="w-full h-full object-cover" alt={`Jalan rusak daerah ${props.alt}`}/>
+        <img src={props.photo} loading="lazy" className="w-full h-full object-cover" alt={`Jalan rusak daerah ${props.alt}`}/>
       </div>
       {isZoom && 
       <div onClick={() => setIsZoom(!isZoom)} className='absolute inset-0 z-30 bg-gray-600 bg-opacity-50 h-full w-full'>
@@ -19,7 +19,7 @@ export default function ImgZoom(props) {
         </button>
         <div className="flex justify-center items-center p-5 -mt-16 h-full w-full">
           <div className="overflow-scroll bg-slate-200 p-3 rounded-lg w-full max-h-[32rem] md:w-[35rem] lg:w-[42rem]">
-            <img src={props.photo} className="h-full w-full" alt={`Jalan rusak daerah ${props.alt}`}/>
+            <img src={props.photo} loading="lazy" className="h-full w-full" alt={`Jalan rusak daerah ${props.alt}`}/>
           </div>
         </div>
       </div>}
