@@ -190,7 +190,7 @@ export default function Form() {
 
           <button
             type="submit"
-            className="relative p-3 text-white overflow-hidden bg-slate-800"
+            className="relative p-3 text-white overflow-hidden bg-slate-800 hover:bg-slate-600 duration-200"
           >
             {!uploading ? 'LAPORKAN' : 'Tunggu sebentar...'}
           </button>

@@ -61,6 +61,13 @@
     background-blend-mode: luminosity;
   }
 
+  .bg-auth {
+    background-image: url('../../public/img/login-background.webp');
+    background-size: cover;
+    background-repeat: no-repeat;
+    background-position: center;
+  }
+
   .nav-list {
     animation: navAnimation .4s;
   }
@@ -73,4 +80,58 @@
       margin-right: 0;
     }
   }
+}
+
+@layer components {
+  /* Input container */
+  .input-container {
+    position: relative;
+    margin: 20px 0;
+  }
+
+  /* Input field */
+  .input-field {
+    display: block;
+    width: 100%;
+    padding: 10px;
+    font-size: 16px;
+    border: none;
+    border-bottom: 2px solid #ccc;
+    outline: none;
+    background-color: transparent;
+  }
+
+  /* Input label */
+  .input-label {
+    position: absolute;
+    top: 0;
+    left: 0;
+    font-size: 16px;
+    color: rgba(204, 204, 204, 0);
+    pointer-events: none;
+    transition: all 0.3s ease;
+  }
+
+  /* Input highlight */
+  .input-highlight {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    height: 2px;
+    width: 0;
+    transition: all 0.3s ease;
+    @apply bg-slate-800
+  }
+
+  /* Input field:focus styles */
+  .input-field:focus + .input-label {
+    top: -10px;
+    font-size: 12px;
+    @apply text-slate-800
+  }
+
+  .input-field:focus + .input-label + .input-highlight {
+    width: 100%;
+  }
+
 }
