@@ -1,4 +1,5 @@
 import './globals.css'
+import NextTopLoader from 'nextjs-toploader';
 
 export const metadata = {
   title: 'JalanKita',
@@ -8,7 +9,10 @@ export const metadata = {
 export default function RootLayout({ children }) {
   return (
     <html lang="id">
-      <body className="poppins bg-slate-200">{children}</body>
+      <body className="poppins bg-slate-200">
+        <NextTopLoader color="#10b981" height={5}/>
+        {children}
+      </body>
     </html>
   )
 }

@@ -34,3 +34,19 @@ model Report {
 
   @@map("reports")
 }
+
+enum roleLevel {
+  superAdmin
+  admin
+  faqAdmin
+}
+model Admin {
+  id             Int        @id @default(autoincrement())
+  adminId        String     @unique
+  level          roleLevel  @default(admin)
+  access         String     @db.VarChar(4)
+  registerAt     DateTime   @default(now())
+  password       String     @db.VarChar(255)
+
+  @@map("admins")
+}

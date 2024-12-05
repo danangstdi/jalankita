@@ -1,7 +1,9 @@
-import React from 'react'
+// "use client"
+
+// import { useState } from 'react'
 import Logo from '@/../public/svg Logo.svg'
-import Background from '@/../public/img/login-background.webp'
 import Image from 'next/image'
+import LoginForm from './_partials/LoginForm'
 
 
 export default function page() {
@@ -12,21 +14,7 @@ export default function page() {
           <section id='left-side' className='bg-slate-50 p-5 lg:p-10'>
             <Image src={Logo} loading='lazy' alt="Logo JalanKita" className='h-14 w-fit rounded-lg bg-slate-900 p-2'/>
             <h1 className='mt-4 text-xl font-semibold'>Selamat Datang!</h1>
-            <form action="">
-              <div className="input-container">
-                <input type="text" placeholder="Masukkan ID" className="input-field"/>
-                <label htmlFor='input-field' className="input-label">Masukkan ID</label>
-                <span className="input-highlight"></span>
-              </div>
-              <div className="input-container">
-                <input type="text" placeholder="Masukkan Password" className="input-field"/>
-                <label htmlFor='input-field' className="input-label">Masukkan Password</label>
-                <span className="input-highlight"></span>
-              </div>
-              <button type="submit" className="text-sm py-3 px-5 text-white bg-slate-800 hover:bg-slate-600 duration-200">
-                MASUK
-              </button>
-            </form>
+            <LoginForm/>
           </section>
           <section id='right-side' className='hidden bg-auth overflow-hidden md:block'>
           </section>
