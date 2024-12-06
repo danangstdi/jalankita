@@ -11,7 +11,7 @@ export default function ImgZoom(props) {
         <img src={props.photo} loading="lazy" className="w-full h-full object-cover" alt={`Jalan rusak daerah ${props.alt}`}/>
       </div>
       {isZoom && 
-      <div onClick={() => setIsZoom(!isZoom)} className='absolute inset-0 z-30 bg-gray-600 bg-opacity-50 h-full w-full'>
+      <div onClick={() => setIsZoom(!isZoom)} className='fixed inset-0 z-30 bg-gray-600 bg-opacity-50 h-full w-full'>
         <button type="button" className="text-slate-100 mt-3 pr-3 w-full flex justify-end">
           <svg className="bg-slate-800 h-11 w-11 p-2 rounded-md" xmlns="http://www.w3.org/2000/svg" width="22" height="22" fill="currentColor" viewBox="0 0 16 16">
             <path d="M2.146 2.854a.5.5 0 1 1 .708-.708L8 7.293l5.146-5.147a.5.5 0 0 1 .708.708L8.707 8l5.147 5.146a.5.5 0 0 1-.708.708L8 8.707l-5.146 5.147a.5.5 0 0 1-.708-.708L7.293 8z"/>

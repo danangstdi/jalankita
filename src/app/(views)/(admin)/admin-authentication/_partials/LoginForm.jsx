@@ -15,23 +15,36 @@ export default function LoginForm() {
   const handleSubmit = async (e) => {
     e.preventDefault();
 
-    const sendData = {
+    const sendDataAuth = {
       adminId: form.adminId,
       password: form.password,
     };
 
+    const sendDataLogAudit = {
+      adminId: form.adminId,
+      action: "Login",
+    };
+
     try {
       setLoading(true);
-      const req = await fetch("http://localhost:3000/api/admin/auth", {
+      const reqAuth = await fetch("http://localhost:3000/api/admin/auth", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
         },
-        body: JSON.stringify(sendData),
+        body: JSON.stringify(sendDataAuth),
       });
 
-      const res = await req.json();
-      if (req.ok) {
+      const reqLogAudit = await fetch("http://localhost:3000/api/logAudits", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(sendDataLogAudit),
+      });
+
+      const res = await reqAuth.json();
+      if (reqAuth.ok && reqLogAudit.ok) {
         Toast("success", res.message);
         router.push('/dashboard');
       } else {

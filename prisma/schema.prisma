@@ -50,3 +50,12 @@ model Admin {
 
   @@map("admins")
 }
+
+model logAudit {
+  logId     Int @id   @default(autoincrement())
+  adminId   String    @db.VarChar(255)
+  action    String    @db.VarChar(255)
+  actionAt  DateTime  @default(now())
+
+  @@map("logAudits")
+}

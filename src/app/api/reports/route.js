@@ -4,6 +4,17 @@ import prisma from "../../../../prisma/client";
 export async function GET() {
   try {
     const reports = await prisma.report.findMany();
+    const sortedReports = reports.sort((a, b) => {
+      const statusPriority = {
+        PENDING: 1,
+        PROGRESS: 2,
+        RESOLVED: 3,
+        REJECTED: 4,
+      };
+
+      return statusPriority[a.reportStatus] - statusPriority[b.reportStatus];
+    });
+
     const totalReports = await prisma.report.count();
     const totalPending = await prisma.report.count({
       where: {
@@ -35,7 +46,7 @@ export async function GET() {
         totalProgress: totalProgress,
         totalResolved: totalResolved,
         totalRejected: totalRejected,
-        data: reports,
+        data: sortedReports,
       },
       {
         status: 200,
@@ -58,6 +69,19 @@ export async function GET() {
 export async function POST(request) {
   try {
     const { fullname, whatsapp, province, regency, district, detail, photo } = await request.json();
+
+    if (!photo) {
+      return NextResponse.json(
+        { 
+          success: false, 
+          message: "Harap lampirkan foto sebagai bukti", 
+          // error: "Harap lampirkan foto sebagai bukti" 
+        },
+        { 
+          status: 401
+        }
+      );
+    }
 
     const report = await prisma.report.create({
       data: {

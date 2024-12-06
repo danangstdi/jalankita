@@ -84,6 +84,7 @@ export default function Form() {
         body: JSON.stringify(sendData),
       });
 
+      const resBody = await res.json();
       if (res.ok) {
         Toast("success", "Laporan berhasil dikirim");
         setForm({
@@ -98,7 +99,7 @@ export default function Form() {
         setFile(null);
         setFileAccepted(false);
       } else {
-        Toast("error", "Terjadi masalah, laporan gagal dikirim");
+        Toast("error", resBody.message);
       }
     } catch (err) {
       console.log("Gagal submit!");
