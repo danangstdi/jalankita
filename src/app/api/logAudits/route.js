@@ -3,7 +3,11 @@ import prisma from "../../../../prisma/client";
 
 export async function GET() {
   try {
-    const logAudits = await prisma.logAudit.findMany();
+    const logAudits = await prisma.logAudit.findMany({
+      orderBy: {
+        actionAt: 'desc',
+      }
+    });
     const totalLogAudit = await prisma.logAudit.count();
 
     return NextResponse.json(

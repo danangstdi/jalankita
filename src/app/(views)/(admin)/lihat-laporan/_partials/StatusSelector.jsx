@@ -20,8 +20,7 @@ const StatusSelector = ({ id }) => {
     });
     if (reportStatus) { 
       try {
-        const res = await fetch(
-          `http://localhost:3000/api/reports/${id}`,
+        const res = await fetch(`http://localhost:3000/api/reports/${id}`,
           {
             method: "PATCH",
             headers: {

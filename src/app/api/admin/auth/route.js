@@ -34,17 +34,41 @@ export async function POST(request) {
       );
     }
 
-    const cookieValue = JSON.stringify({
-      adminId: getIdFromDb.adminId,
-      level: getIdFromDb.level,
-      access: getIdFromDb.access,
-    });
-    cookies().set('jalankita_auth_session_key', cookieValue, {
+    // const cookieValue = JSON.stringify({
+    //   adminId: getIdFromDb.adminId,
+    //   level: getIdFromDb.level,
+    //   access: getIdFromDb.access,
+    // });
+    // cookies().set('jalankita_auth_session_key', cookieValue, {
+    //   // httpOnly: true,
+    //   // secure: true,
+    //   sameSite: "strict",
+    //   path: "/",
+    //   // maxAge: 60 * 60 * 24,
+    // })
+
+    // alternative cookie :
+    const session = await cookies();
+    session.set({
+      name: 'jalankita_auth_adminId',
+      value: getIdFromDb.adminId,
       // httpOnly: true,
-      // secure: true,
       sameSite: "strict",
-      path: "/",
-      // maxAge: 60 * 60 * 24,
+      path: '/',
+    })
+    session.set({
+      name: 'jalankita_auth_level',
+      value: getIdFromDb.level,
+      // httpOnly: true,
+      sameSite: "strict",
+      path: '/',
+    })
+    session.set({
+      name: 'jalankita_auth_access',
+      value: getIdFromDb.access,
+      // httpOnly: true,
+      sameSite: "strict",
+      path: '/',
     })
 
     return NextResponse.json(

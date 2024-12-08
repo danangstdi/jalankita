@@ -1,17 +1,17 @@
 import { NextResponse } from 'next/server'
  
 export function middleware(request) {
-  const token = request.cookies.get('jalankita_auth_session_key');
+  const session = request.cookies.get('jalankita_auth_adminId');
   let url= request.nextUrl.pathname;
 
   if (url.startsWith('/admin-authentication')) {
-    if (token) {
+    if (session) {
       return NextResponse.redirect(new URL('/dashboard', request.url))
     }
   }
   
   if (url.startsWith('/dashboard') || url.startsWith('/lihat-laporan')) {
-    if (!token) {
+    if (!session) {
       return NextResponse.redirect(new URL('/admin-authentication', request.url))
     }
   }

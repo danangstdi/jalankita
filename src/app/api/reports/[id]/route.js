@@ -38,22 +38,8 @@ export async function GET(request, { params }) {
 export async function PATCH(request, { params }) {
   try {
     const id = parseInt(params.id);
-
-    const token = cookies().get('jalankita_auth_session_key')?.value;
-    if (!token) {
-      return NextResponse.json(
-        {
-          success: false,
-          message: "Authentication token is missing.",
-        },
-        {
-          status: 401,
-        }
-      );
-    }
-
-    const parseToken = JSON.parse(token);
-    const adminId = parseToken?.adminId;
+    const session = await cookies();
+    const adminIdFromSession = session.get('jalankita_auth_adminId').value;
 
     const { reportStatus } = await request.json();
     const report = await prisma.report.update({
@@ -66,7 +52,7 @@ export async function PATCH(request, { params }) {
     });
 
     const sendDataLogAudit = {
-      adminId: adminId,
+      adminId: adminIdFromSession,
       action: `Change report status ${id} to ${reportStatus}`,
     };
     await fetch("http://localhost:3000/api/logAudits", {

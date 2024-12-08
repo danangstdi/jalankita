@@ -76,7 +76,7 @@ export default function LoginForm() {
       </div>
       <div className="input-container">
         <input
-          type="text"
+          type="password"
           placeholder="Masukkan Password"
           className="input-field"
           required 
