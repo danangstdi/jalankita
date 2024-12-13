@@ -4,6 +4,7 @@ import DropdownStatus from "./DropdownStatus";
 import { getDataNoCache } from "@/app/sevices/getDataNoCache";
 import StatusSelector from "./StatusSelector";
 import { cookies } from "next/headers";
+import { FormatDate } from "@/app/components/FormatDate";
 
 async function fetchLocationName(id, type) {
   const apiUrls = {
@@ -113,7 +114,9 @@ export default async function TableComponents(props) {
                         {report.fullname}
                       </div>
                       <p className="font-normal text-gray-500">
-                        {report.reportAt}
+                        {
+                          FormatDate(report.reportAt)
+                        }
                       </p>
                     </div>
                   </th>

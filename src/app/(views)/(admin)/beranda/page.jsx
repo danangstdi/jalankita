@@ -1,5 +1,5 @@
 import DashboardNav from "../_partials/DashboardNav"
-import StatsCard from "./_partials/StatsCard"
+import StatsCard from "../beranda/_partials/StatsCard"
 import { getDataNoCache } from "@/app/sevices/getDataNoCache"
 
 export default async function Dashboard() {
@@ -7,7 +7,7 @@ export default async function Dashboard() {
 
   return (
     <>
-      <DashboardNav page="Dashboard"/>
+      <DashboardNav page="Beranda"/>
       <main className='m-2 flex justify-between items-center bg-slate-50 p-4 shadow-lg lg:ml-[19rem] lg:py-5'>
         <section className="grid md:grid-cols-2 lg:grid-cols-4 w-full gap-4">
             <StatsCard title="Total Laporan" color="emerald" main={total.totalReports} small="Perhari ini sebanyak 1.200 Laporan"/>

@@ -46,7 +46,7 @@ export default function LoginForm() {
       const res = await reqAuth.json();
       if (reqAuth.ok && reqLogAudit.ok) {
         Toast("success", res.message);
-        router.push('/dashboard');
+        router.push('/beranda');
       } else {
         Toast("error", res.message);
       }

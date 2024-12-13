@@ -1,3 +1,4 @@
+import { FormatDate } from "@/app/components/FormatDate";
 import { getDataNoCache } from "@/app/sevices/getDataNoCache";
 
 export default async function TableComponents() {
@@ -30,7 +31,10 @@ export default async function TableComponents() {
               ADMIN
             </th>
             <th scope="col" className="px-6 py-3">
-              AKSI
+              AKTIFITAS
+            </th>
+            <th scope="col" className="px-6 py-3">
+              TANGGAL
             </th>
           </tr>
         </thead>
@@ -44,18 +48,20 @@ export default async function TableComponents() {
           ) : logAudits.map((log, index) => (
                 <tr key={log.id} className="bg-white border-b hover:bg-gray-50">
                   {/* <td className="px-6 py-4 text-gray-900">{index + 1}</td> */}
-                  <th scope="row" className="flex items-center px-6 py-4 text-gray-900 whitespace-nowrap">
-                    <div>
+                  <td scope="row" className="flex items-center px-6 py-4 text-gray-900 whitespace-nowrap">
                       <div className="text-base font-semibold">
                         {log.adminId}
                       </div>
-                      <p className="font-normal text-gray-500">
-                        {log.actionAt}
-                      </p>
-                    </div>
-                  </th>
+                  </td>
                   <td className="px-6 py-4 text-slate-800">
                     {log.action}
+                  </td>
+                  <td className="px-6 py-4 text-slate-800">
+                    <p className="font-normal text-gray-500">
+                      {
+                        FormatDate(log.actionAt)
+                      }
+                    </p>
                   </td>
                 </tr>
               )

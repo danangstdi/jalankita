@@ -39,31 +39,31 @@ export default function DropdownStatus(props) {
       <div id="dropdown-list" className={`${!isOpenDropdownm && 'hidden'} absolute z-10 bg-white divide-y divide-gray-100 rounded-lg shadow w-44`}>
         <ul className="py-1 text-sm text-gray-700 shadow-lg">
           <li>
-            <Link href="/lihat-laporan" className="py-2 hover:bg-gray-100 flex justify-start items-center gap-2 w-full">
+            <Link href="/daftar-laporan" className="py-2 hover:bg-gray-100 flex justify-start items-center gap-2 w-full">
               <i className="p-1 ml-3 bg-white border border-gray-500 rounded-full"></i>
               Semua
             </Link>
           </li>
           <li>
-            <Link href="/lihat-laporan/pending" className="py-2 hover:bg-gray-100 flex justify-start items-center gap-2 w-full">
+            <Link href="/daftar-laporan/menunggu" className="py-2 hover:bg-gray-100 flex justify-start items-center gap-2 w-full">
               <i className="p-1 ml-3 bg-gray-500 border border-gray-500 rounded-full"></i>
               Menunggu
             </Link>
           </li>
           <li>
-            <Link href="/lihat-laporan/progress" className="py-2 hover:bg-gray-100 flex justify-start items-center gap-2 w-full">
+            <Link href="/daftar-laporan/diproses" className="py-2 hover:bg-gray-100 flex justify-start items-center gap-2 w-full">
               <i className="p-1 ml-3 bg-yellow-500 border border-gray-500 rounded-full"></i>
               Diproses
             </Link>
           </li>
           <li>
-            <Link href="/lihat-laporan/resolved" className="py-2 hover:bg-gray-100 flex justify-start items-center gap-2 w-full">
+            <Link href="/daftar-laporan/selesai" className="py-2 hover:bg-gray-100 flex justify-start items-center gap-2 w-full">
               <i className="p-1 ml-3 bg-green-500 border border-gray-500 rounded-full"></i>
               Selesai
             </Link>
           </li>
           <li>
-            <Link href="/lihat-laporan/rejected" className="py-2 hover:bg-gray-100 flex justify-start items-center gap-2 w-full">
+            <Link href="/daftar-laporan/ditolak" className="py-2 hover:bg-gray-100 flex justify-start items-center gap-2 w-full">
               <i className="p-1 ml-3 bg-red-500 border border-gray-500 rounded-full"></i>
               Ditolak
             </Link>
