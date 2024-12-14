@@ -6,11 +6,11 @@ export function middleware(request) {
 
   if (url.startsWith('/admin-authentication')) {
     if (session) {
-      return NextResponse.redirect(new URL('/dashboard', request.url))
+      return NextResponse.redirect(new URL('/beranda', request.url))
     }
   }
   
-  if (url.startsWith('/dashboard') || url.startsWith('/lihat-laporan')) {
+  if (url.startsWith('/beranda') || url.startsWith('/daftar-laporan')) {
     if (!session) {
       return NextResponse.redirect(new URL('/admin-authentication', request.url))
     }
@@ -18,5 +18,5 @@ export function middleware(request) {
 }
  
 export const config = {
-  matcher: ['/dashboard', '/lihat-laporan', '/admin-authentication'],
+  matcher: ['/beranda', '/daftar-laporan', '/admin-authentication'],
 }
