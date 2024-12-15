@@ -80,6 +80,24 @@ export async function POST(request) {
     const { adminId, access, password } = await request.json();
     const hashPassword = await bcrypt.hash(password, 10);
 
+    const checkAdminIdIsTaken = await prisma.admin.findUnique({
+      where: {
+        adminId: adminId,
+      }
+    });
+
+    if (checkAdminIdIsTaken) {
+      return NextResponse.json(
+        { 
+          success: false, 
+          message: "Terjadi kesalahan pada sistem, coba beberapa menit lagi", 
+          error: error.message },
+        { 
+          status: 500
+        }
+      );
+    }
+
     const admin = await prisma.admin.create({
       data: {
         adminId: adminId,

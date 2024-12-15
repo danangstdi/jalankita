@@ -110,7 +110,7 @@ export default function AddAdmin() {
         });
   
         if (resAddAdmin.ok && reqLogAudit.ok) {
-          // Muat Toast setelah reload
+          localStorage.setItem("addAdminToast", true);
           window.location.reload();
         } else {
           const errorMessage = await resAddAdmin.json();
@@ -121,6 +121,18 @@ export default function AddAdmin() {
       }
     }
   };
+
+  const useStatusToast = () => {
+    useEffect(() => {
+      const addAdminToast = localStorage.getItem("addAdminToast");
+  
+      if (addAdminToast) {
+        Toast('success', 'Berhasil menambahkan admin')
+        localStorage.removeItem("addAdminToast");
+      }
+    }, []);
+  };
+  useStatusToast();
 
   return (
     <button
