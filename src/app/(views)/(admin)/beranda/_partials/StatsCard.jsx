@@ -1,4 +1,5 @@
 import React from "react";
+import Link from "next/link";
 
 export default function StatsCard(props) {
   return (
@@ -12,9 +13,15 @@ export default function StatsCard(props) {
         <h3 className="text-white">{props.title}</h3>
       </div>
       <h4 className="text-white text-3xl font-bold mt-5">{props.main}</h4>
-      <p className="text-sm text-white mt-5">
+      <Link href={props.link} className="flex items-center gap-2 mt-5 py-2 text-xs text-white group">
+        <span>Lihat Selengkapnya</span>
+        <svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" fill="currentColor" className="group-hover:ml-2 group-hover:duration-300" viewBox="0 0 16 16">
+          <path fillRule="evenodd" d="M4.646 1.646a.5.5 0 0 1 .708 0l6 6a.5.5 0 0 1 0 .708l-6 6a.5.5 0 0 1-.708-.708L10.293 8 4.646 2.354a.5.5 0 0 1 0-.708"/>
+        </svg>
+      </Link>
+      {/* <p className="text-sm text-white mt-5">
         {props.small}
-      </p>
+      </p> */}
     </div>
   );
 }

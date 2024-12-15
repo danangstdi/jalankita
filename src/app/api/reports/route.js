@@ -1,10 +1,19 @@
 import { NextResponse } from "next/server";
 import prisma from "../../../../prisma/client";
-import { cookies } from "next/headers";
 
-export async function GET() {
+export async function GET(req) {
   try {
-    const reports = await prisma.report.findMany();
+    const url = req.nextUrl;
+    const access = url.searchParams.get('access');
+
+    const filterConditions = {};
+    if (access) {
+      filterConditions.province = access;
+    }
+
+    const reports = await prisma.report.findMany({
+      where: filterConditions,
+    });
     const sortedReports = reports.sort((a, b) => {
       const statusPriority = {
         PENDING: 1,
@@ -16,24 +25,30 @@ export async function GET() {
       return statusPriority[a.reportStatus] - statusPriority[b.reportStatus];
     });
 
-    const totalReports = await prisma.report.count();
+    const totalReports = await prisma.report.count({
+      where: filterConditions,
+    });
     const totalPending = await prisma.report.count({
       where: {
+          ...filterConditions,
           reportStatus: "PENDING",
       },
     });
     const totalProgress = await prisma.report.count({
       where: {
+          ...filterConditions,
           reportStatus: "PROGRESS",
       },
     });
     const totalResolved = await prisma.report.count({
       where: {
+          ...filterConditions,
           reportStatus: "RESOLVED",
       },
     });
     const totalRejected = await prisma.report.count({
       where: {
+          ...filterConditions,
           reportStatus: "REJECTED",
       },
     });

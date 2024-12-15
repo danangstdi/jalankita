@@ -1,14 +1,27 @@
+import { cookies } from "next/headers"
 import DashboardNav from "../../../_partials/DashboardNav"
 import TableComponents from "../../_partials/TableComponents"
+import AdminFooter from "@/app/components/AdminFooter";
 
-export default function page() {
+export default async function page() {
+  const session = await cookies();
+  const access = session.get("jalankita_auth_access").value;
+  let endpoint = '';
+  if (access !== 'ALL') {
+    endpoint = `reports/status?access=${access}&reportStatus=PROGRESS`;
+  } else {
+    endpoint = `reports/status?reportStatus=PROGRESS`;
+  }
+
   return (
     <>
-      <DashboardNav page="Lihat Laporan"/>
+      <DashboardNav page="Daftar Laporan"/>
 
       <main className='m-2 flex justify-between items-center bg-slate-50 p-4 shadow-lg lg:ml-[19rem] lg:py-5'>
-        <TableComponents api="http://localhost:3000/api/reports/progress" setReportStatus="Diproses"/>
+        <TableComponents api={`http://localhost:3000/api/${endpoint}`} setReportStatus="Diproses"/>
       </main>
+
+      <AdminFooter/>
     </>
   )
 }
