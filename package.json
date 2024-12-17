@@ -17,6 +17,7 @@
     "next": "14.0.4",
     "next-auth": "^4.24.10",
     "nextjs-toploader": "^3.7.15",
+    "pg": "^8.13.1",
     "react": "^18",
     "react-chartjs-2": "^5.2.0",
     "react-dom": "^18",

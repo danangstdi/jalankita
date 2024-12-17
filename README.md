@@ -22,7 +22,8 @@ npm run migrate
 
 4. Add superAdmin account in mysql:
 ```example: phpmyadmin
-INSERT INTO `admins` (`id`, `adminId`, `level`, `access`, `registerAt`, `password`, `noEncryptPassword`) VALUES (NULL, 'superadmin2024', 'superAdmin', 'ALL', '2024-12-12 11:41:57.496000', '$2a$12$CZ4SGfxKUIsYrWfzh3Je1OTwEQTQKJPJxdbRLYksGQNzXml9IMOFq', 'admin123')
+INSERT INTO admins ("id", "adminId", "level", "access", "registerAt", "password", "noEncryptPassword") 
+VALUES (DEFAULT, 'superadmin2024', 'superAdmin', 'ALL', '2024-12-12 11:41:57', '$2a$12$CZ4SGfxKUIsYrWfzh3Je1OTwEQTQKJPJxdbRLYksGQNzXml9IMOFq', 'admin123');
 ```
 
 DONE:>
