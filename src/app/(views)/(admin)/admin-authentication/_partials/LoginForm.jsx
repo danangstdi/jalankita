@@ -27,7 +27,7 @@ export default function LoginForm() {
 
     try {
       setLoading(true);
-      const reqAuth = await fetch("http://localhost:3000/api/admin/auth", {
+      const reqAuth = await fetch("https://jalankita.vercel.app/api/admin/auth", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -35,7 +35,7 @@ export default function LoginForm() {
         body: JSON.stringify(sendDataAuth),
       });
 
-      const reqLogAudit = await fetch("http://localhost:3000/api/logAudits", {
+      const reqLogAudit = await fetch("https://jalankita.vercel.app/api/logAudits", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",

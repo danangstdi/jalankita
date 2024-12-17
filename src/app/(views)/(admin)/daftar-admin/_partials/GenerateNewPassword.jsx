@@ -18,7 +18,7 @@ export default function GenerateNewPassword(props) {
                 id: props.adminIntId,
               };
       
-              const resGeneratePassword = await fetch("http://localhost:3000/api/admin", {
+              const resGeneratePassword = await fetch("https://jalankita.vercel.app/api/admin", {
                 method: "PATCH",
                 headers: {
                   "Content-Type": "application/json",

@@ -78,7 +78,7 @@ export default function AddAdmin() {
                 </ul>`
         });
        
-        const resAddAdmin = await fetch(`http://localhost:3000/api/admin`,
+        const resAddAdmin = await fetch(`https://jalankita.vercel.app/api/admin`,
           {
             method: "POST",
             headers: {
@@ -101,7 +101,7 @@ export default function AddAdmin() {
           action: `Mendaftarkan akun admin ${adminId} (${provinceName})`,
         };
 
-        const reqLogAudit = await fetch("http://localhost:3000/api/logAudits", {
+        const reqLogAudit = await fetch("https://jalankita.vercel.app/api/logAudits", {
           method: "POST",
           headers: {
             "Content-Type": "application/json",

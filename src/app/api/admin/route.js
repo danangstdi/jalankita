@@ -147,7 +147,7 @@ export async function DELETE(request) {
       adminId: adminIdFromSession,
       action: `Menghapus admin dengan id:${id}`,
     };
-    await fetch("http://localhost:3000/api/logAudits", {
+    await fetch("https://jalankita.vercel.app/api/logAudits", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
@@ -214,7 +214,7 @@ export async function PATCH(request) {
       adminId: adminIdFromSession,
       action: `Memperbarui kata sandi admin dengan id:${id}`,
     };
-    await fetch("http://localhost:3000/api/logAudits", {
+    await fetch("https://jalankita.vercel.app/api/logAudits", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",

@@ -76,7 +76,7 @@ export default function Form() {
     };
 
     try {
-      const res = await fetch("http://localhost:3000/api/reports", {
+      const res = await fetch("https://jalankita.vercel.app/api/reports", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",

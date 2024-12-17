@@ -55,7 +55,7 @@ export async function PATCH(request, { params }) {
       adminId: adminIdFromSession,
       action: `Change report status ${id} to ${reportStatus}`,
     };
-    await fetch("http://localhost:3000/api/logAudits", {
+    await fetch("https://jalankita.vercel.app/api/logAudits", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",

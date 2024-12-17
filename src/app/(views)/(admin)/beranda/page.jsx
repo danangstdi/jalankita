@@ -16,7 +16,7 @@ export default async function Dashboard() {
     endpoint = 'reports';
   }
 
-  const reports = await getDataNoCache(`http://localhost:3000/api/${endpoint}`)
+  const reports = await getDataNoCache(`https://jalankita.vercel.app/api/${endpoint}`)
 
   return (
     <>
