@@ -27,7 +27,3 @@ VALUES (DEFAULT, 'superadmin2024', 'superAdmin', 'ALL', '2024-12-12 11:41:57', '
 ```
 
 DONE:>
-
-postgresql://postgres:[YOUR-PASSWORD]@db.ldtkvswxamyxmtctgbuq.supabase.co:5432/postgres
-
-postgres://postgres.ldtkvswxamyxmtctgbuq:1Xyy2D6CTVel7bhA@aws-0-ap-southeast-1.pooler.supabase.com:6543/postgres?sslmode=require&supa=base-pooler.x

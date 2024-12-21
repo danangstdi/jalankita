@@ -10,10 +10,10 @@ const StatusSelector = ({ id }) => {
       title: "Pilih Status",
       input: "select",
       inputOptions: {
-          PENDING: "PENDING",
-          PROGRESS: "PROGRESS",
-          RESOLVED: "RESOLVED",
-          REJECTED: "REJECTED"
+          PENDING: "Menunggu",
+          PROGRESS: "Diproses",
+          RESOLVED: "Selesai",
+          REJECTED: "Ditolak"
       },
       inputPlaceholder: "Status Laporan",
       showCancelButton: true,

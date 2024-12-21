@@ -51,9 +51,20 @@ export async function PATCH(request, { params }) {
       },
     });
 
+    let reportStatusIndo = '';
+    if (reportStatus == 'PROGRESS') {
+      reportStatusIndo = 'Diproses';
+    }else if (reportStatus == 'RESOLVED') {
+      reportStatusIndo = 'Selesai';
+    } else if (reportStatusIndo =='REJECTED') {
+      reportStatusIndo = 'Ditolak'
+    } else {
+      reportStatus = 'Menunggu'
+    }
+
     const sendDataLogAudit = {
       adminId: adminIdFromSession,
-      action: `Change report status ${id} to ${reportStatus}`,
+      action: `Mengubah status laporan ${id} ke ${reportStatusIndo}`,
     };
     await fetch("https://jalankita.vercel.app/api/logAudits", {
       method: "POST",
