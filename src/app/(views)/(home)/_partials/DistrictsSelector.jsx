@@ -22,6 +22,7 @@ const DistrictsSelector = ({ regencyCode, onChange }) => {
 
   return (
     <select
+      required 
       onChange={e => onChange(e.target.value)}
       className='p-3 border border-gray-400 bg-transparent'
     >
