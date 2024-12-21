@@ -51,7 +51,7 @@ export default function DashboardNav(props) {
           }
 
           // Kirim data ke API logAudits
-          await fetch(`${process.env.NEXT_PUBLIC_APP_URL}/api/logAudits`, {
+          await fetch("https://jalankita.vercel.app/api/logAudits", {
             method: "POST",
             headers: {
               "Content-Type": "application/json",

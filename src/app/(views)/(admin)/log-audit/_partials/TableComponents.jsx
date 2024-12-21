@@ -2,7 +2,7 @@ import { FormatDate } from "@/app/components/FormatDate";
 import { getDataNoCache } from "@/app/sevices/getDataNoCache";
 
 export default async function TableComponents() {
-  const getLogAudit = await getDataNoCache(`${process.env.NEXT_PUBLIC_APP_URL}/api/logAudits`);
+  const getLogAudit = await getDataNoCache('https://jalankita.vercel.app/api/logAudits');
   const logAudits = getLogAudit.data;
 
   return (

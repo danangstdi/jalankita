@@ -18,7 +18,7 @@ export default function DeleteAdmin(props) {
               id: props.adminIntId,
             };
     
-            const resDelete = await fetch(`${process.env.NEXT_PUBLIC_APP_URL}/api/admin`, {
+            const resDelete = await fetch("https://jalankita.vercel.app/api/admin", {
               method: "DELETE",
               headers: {
                 "Content-Type": "application/json",
