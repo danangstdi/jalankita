@@ -124,7 +124,7 @@ export default function Form() {
           />
 
           <div className="grid grid-cols-12">
-            <div className="col-span-2 md:col-span-1 p-3 text-center border-l border-y border-gray-400 bg-gray-100 text-gray-600">
+            <div className="col-span-2 md:col-span-1 p-3 text-center text-sm border-l border-y border-gray-400 bg-gray-100 text-gray-600">
               +62
             </div>
             <input
