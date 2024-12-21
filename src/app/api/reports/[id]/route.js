@@ -1,6 +1,5 @@
 import { NextResponse } from "next/server";
 import prisma from "../../../../../prisma/client";
-import { cookies } from "next/headers";
 
 export async function GET(request, { params }) {
   const id = parseInt(params.id);
@@ -38,8 +37,6 @@ export async function GET(request, { params }) {
 export async function PATCH(request, { params }) {
   try {
     const id = parseInt(params.id);
-    const session = await cookies();
-    const adminIdFromSession = session.get('jalankita_auth_adminId').value;
 
     const { reportStatus } = await request.json();
     const report = await prisma.report.update({
@@ -49,29 +46,6 @@ export async function PATCH(request, { params }) {
       data: {
         reportStatus: reportStatus,
       },
-    });
-
-    let reportStatusIndo = '';
-    if (reportStatus == 'PROGRESS') {
-      reportStatusIndo = 'Diproses';
-    }else if (reportStatus == 'RESOLVED') {
-      reportStatusIndo = 'Selesai';
-    } else if (reportStatusIndo =='REJECTED') {
-      reportStatusIndo = 'Ditolak'
-    } else {
-      reportStatusIndo = 'Menunggu'
-    }
-
-    const sendDataLogAudit = {
-      adminId: adminIdFromSession,
-      action: `Mengubah status laporan ${id} ke ${reportStatusIndo}`,
-    };
-    await fetch("https://jalankita.vercel.app/api/logAudits", {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify(sendDataLogAudit),
     });
 
     return NextResponse.json(

@@ -20,7 +20,7 @@ const StatusSelector = ({ id }) => {
     });
     if (reportStatus) { 
       try {
-        const res = await fetch(`https://jalankita.vercel.app/api/reports/${id}`,
+        const resStatus = await fetch(`https://jalankita.vercel.app/api/reports/${id}`,
           {
             method: "PATCH",
             headers: {
@@ -32,8 +32,31 @@ const StatusSelector = ({ id }) => {
             }),
           }
         );
+
+        const adminIdFromSession = document.cookie.split("; ").find((row) => row.startsWith("jalankita_auth_adminId="))?.split("=")[1];
+        let reportStatusIndo = '';
+        if (reportStatus == 'PROGRESS') {
+          reportStatusIndo = 'Diproses';
+        } else if (reportStatus == 'RESOLVED') {
+          reportStatusIndo = 'Selesai';
+        } else if (reportStatusIndo =='REJECTED') {
+          reportStatusIndo = 'Ditolak'
+        } else {
+          reportStatusIndo = 'Menunggu'
+        }
+        const sendDataLogAudit = {
+              adminId: adminIdFromSession,
+              action: `Mengubah status laporan ${id} ke ${reportStatusIndo}`,
+            };
+        const resLogAudit = await fetch("https://jalankita.vercel.app/api/logAudits", {
+              method: "POST",
+              headers: {
+                "Content-Type": "application/json",
+              },
+              body: JSON.stringify(sendDataLogAudit),
+            });
   
-        if (res.ok) {
+        if (resStatus.ok && resLogAudit.ok) {
           localStorage.setItem("reportStatusUpdated", reportStatus);
           window.location.reload();
         } else {
