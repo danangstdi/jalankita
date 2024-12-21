@@ -76,7 +76,7 @@ export default function Form() {
     };
 
     try {
-      const res = await fetch(`${process.env.NEXT_PUBLIC_APP_URL}/api/reports`, {
+      const res = await fetch(`http://localhost:3000/api/reports`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -99,6 +99,7 @@ export default function Form() {
         setFile(null);
         setFileAccepted(false);
       } else {
+        console.log(`error: ${resBody.message}`);
         Toast("error", resBody.message);
       }
     } catch (err) {

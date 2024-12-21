@@ -91,7 +91,7 @@ export async function POST(request) {
         { 
           success: false, 
           message: "Harap lampirkan foto sebagai bukti", 
-          // error: "Harap lampirkan foto sebagai bukti" 
+          error: error.message 
         },
         { 
           status: 401
@@ -152,7 +152,7 @@ export async function POST(request) {
     return NextResponse.json(
       { 
         success: false, 
-        message: "Failed to create report", 
+        message: "Gagal mengirim laporan", 
         error: error.message },
       { 
         status: 500 
