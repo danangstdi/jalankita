@@ -90,9 +90,9 @@ export default function Form() {
         setForm({
           fullname: "",
           whatsapp: "",
-          province: "",
-          regency: "",
-          district: "",
+          // province: "",
+          // regency: "",
+          // district: "",
           detail: "",
           photo: "",
         });

@@ -22,7 +22,7 @@ export default function LoginForm() {
 
     const sendDataLogAudit = {
       adminId: form.adminId,
-      action: "Login",
+      action: "Masuk ke sistem",
     };
 
     try {
