@@ -20,7 +20,7 @@ const StatusSelector = ({ id }) => {
     });
     if (reportStatus) { 
       try {
-        const res = await fetch(`https://jalankita.vercel.app/api/reports/${id}`,
+        const res = await fetch(`${process.env.NEXT_PUBLIC_APP_URL}/api/reports/${id}`,
           {
             method: "PATCH",
             headers: {

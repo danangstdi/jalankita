@@ -13,7 +13,7 @@ export default async function Chart() {
     endpoint = 'reports/charts';
   }
 
-  const dataReports = await getDataNoCache(`https://jalankita.vercel.app/api/${endpoint}`);
+  const dataReports = await getDataNoCache(`${process.env.NEXT_PUBLIC_APP_URL}/api/${endpoint}`);
   const months = dataReports.months;
   const values = dataReports.values;
 

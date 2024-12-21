@@ -17,7 +17,7 @@ async function fetchLocationName(kode) {
 }
 
 export default async function TableComponents() {
-  const getAdmin = await getDataNoCache('https://jalankita.vercel.app/api/admin');
+  const getAdmin = await getDataNoCache(`${process.env.NEXT_PUBLIC_APP_URL}}/api/admin`);
   const admins = getAdmin.data;
 
   return (

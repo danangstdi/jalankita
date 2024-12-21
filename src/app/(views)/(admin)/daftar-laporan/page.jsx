@@ -18,7 +18,7 @@ export default async function DaftarLaporan() {
       <DashboardNav page="Daftar Laporan"/>
 
       <main className='m-2 flex justify-between items-center bg-slate-50 p-4 shadow-lg lg:ml-[19rem] lg:py-5'>
-        <TableComponents api={`https://jalankita.vercel.app/api/${endpoint}`} setReportStatus="Semua"/>
+        <TableComponents api={`${process.env.NEXT_PUBLIC_APP_URL}/api/${endpoint}`} setReportStatus="Semua"/>
       </main>
 
       <AdminFooter/>
