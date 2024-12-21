@@ -59,7 +59,7 @@ export async function PATCH(request, { params }) {
     } else if (reportStatusIndo =='REJECTED') {
       reportStatusIndo = 'Ditolak'
     } else {
-      reportStatus = 'Menunggu'
+      reportStatusIndo = 'Menunggu'
     }
 
     const sendDataLogAudit = {
