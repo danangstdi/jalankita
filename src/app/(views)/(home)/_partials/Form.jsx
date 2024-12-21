@@ -76,7 +76,7 @@ export default function Form() {
     };
 
     try {
-      const res = await fetch("https://jalankita.vercel.app/api/reports", {
+      const res = await fetch(`${process.env.NEXT_PUBLIC_APP_URL}/api/reports`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -191,7 +191,7 @@ export default function Form() {
 
           <button
             type="submit"
-            className="relative p-3 text-white overflow-hidden bg-slate-800 hover:bg-slate-600 duration-200 z-0"
+            className="p-3 text-white bg-slate-800 hover:bg-slate-600 duration-200"
           >
             {!uploading ? 'LAPORKAN' : 'Tunggu sebentar...'}
           </button>
