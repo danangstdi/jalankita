@@ -76,7 +76,7 @@ export default function Form() {
     };
 
     try {
-      const res = await fetch(`https://jalankita.vercel.app/api/reports`, {
+      const res = await fetch("https://jalankita.vercel.app/api/reports", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -99,7 +99,6 @@ export default function Form() {
         setFile(null);
         setFileAccepted(false);
       } else {
-        console.log(`error: ${resBody.message}`);
         Toast("error", resBody.message);
       }
     } catch (err) {
@@ -125,7 +124,7 @@ export default function Form() {
           />
 
           <div className="grid grid-cols-12">
-            <div className="col-span-2 md:col-span-1 p-3 text-sm border-l border-y border-gray-400 bg-gray-100 text-gray-500 flex justify-center items-center">
+            <div className="col-span-1 p-3 text-center border-l border-y border-gray-400 bg-gray-100 text-gray-600">
               +62
             </div>
             <input
@@ -134,7 +133,7 @@ export default function Form() {
               required
               value={form.whatsapp}
               onChange={(e) => setForm({ ...form, whatsapp: e.target.value })}
-              className="col-span-10 md:col-span-11 p-3 border border-gray-400 bg-transparent"
+              className="col-span-11 p-3 border border-gray-400 bg-transparent"
             />
           </div>
 
@@ -192,7 +191,7 @@ export default function Form() {
 
           <button
             type="submit"
-            className="p-3 text-white bg-slate-800 hover:bg-slate-600 duration-200"
+            className="relative p-3 text-white overflow-hidden bg-slate-800 hover:bg-slate-600 duration-200"
           >
             {!uploading ? 'LAPORKAN' : 'Tunggu sebentar...'}
           </button>
