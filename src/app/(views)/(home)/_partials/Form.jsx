@@ -1,7 +1,7 @@
 "use client";
 
 import { Toast } from "@/app/components/Toast";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import ProvincesSelector from "./ProvincesSelector";
 import RegenciesSelector from "./RegenciesSelector";
 import DistrictsSelector from "./DistrictsSelector";
@@ -86,18 +86,20 @@ export default function Form() {
 
       const resBody = await res.json();
       if (res.ok) {
-        Toast("success", "Laporan berhasil dikirim");
-        setForm({
-          fullname: "",
-          whatsapp: "",
-          // province: "",
-          // regency: "",
-          // district: "",
-          detail: "",
-          photo: "",
-        });
-        setFile(null);
-        setFileAccepted(false);
+        localStorage.setItem("reportSubmitSuccessfully", true);
+        // Toast("success", "Laporan berhasil dikirim");
+        window.location.reload();
+        // setForm({
+        //   fullname: "",
+        //   whatsapp: "",
+        //   // province: "",
+        //   // regency: "",
+        //   // district: "",
+        //   detail: "",
+        //   photo: "",
+        // });
+        // setFile(null);
+        // setFileAccepted(false);
       } else {
         console.log(`error: ${resBody.message}`);
         Toast("error", resBody.message);
@@ -107,6 +109,18 @@ export default function Form() {
       Toast("error", "Terjadi masalah, laporan gagal dikirim");
     }
   };
+
+  const useReportSubmitedToast = () => {
+      useEffect(() => {
+        const reportSubmitSuccessfully = localStorage.getItem("reportSubmitSuccessfully");
+    
+        if (reportSubmitSuccessfully) {
+          Toast('success', 'Laporan berhasil dikirim')
+          localStorage.removeItem("reportSubmitSuccessfully");
+        }
+      }, []);
+    };
+    useReportSubmitedToast();
 
   return (
     <section>
