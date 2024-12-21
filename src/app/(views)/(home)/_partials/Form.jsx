@@ -76,7 +76,7 @@ export default function Form() {
     };
 
     try {
-      const res = await fetch(`https://jalankita.vercel.app/api/reports`, {
+      const res = await fetch(`${process.env.NEXT_PUBLIC_BASEURL}/api/reports`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -87,8 +87,8 @@ export default function Form() {
       const resBody = await res.json();
       if (res.ok) {
         localStorage.setItem("reportSubmitSuccessfully", true);
-        // Toast("success", "Laporan berhasil dikirim");
         window.location.reload();
+        // Toast("success", "Laporan berhasil dikirim");
         // setForm({
         //   fullname: "",
         //   whatsapp: "",
