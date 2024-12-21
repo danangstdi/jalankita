@@ -124,7 +124,7 @@ export default function Form() {
           />
 
           <div className="grid grid-cols-12">
-            <div className="col-span-3 md:col-span-1 p-3 text-center border-l border-y border-gray-400 bg-gray-100 text-gray-600">
+            <div className="col-span-2 md:col-span-1 p-3 text-center border-l border-y border-gray-400 bg-gray-100 text-gray-600">
               +62
             </div>
             <input
@@ -133,7 +133,7 @@ export default function Form() {
               required
               value={form.whatsapp}
               onChange={(e) => setForm({ ...form, whatsapp: e.target.value })}
-              className="col-span-8 md:col-span-11 p-3 border border-gray-400 bg-transparent"
+              className="col-span-10 md:col-span-11 p-3 border border-gray-400 bg-transparent"
             />
           </div>
 
