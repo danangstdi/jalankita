@@ -6,12 +6,7 @@ import { cookies } from "next/headers";
 export default async function DaftarLaporan() {
   const session = await cookies();
   const access = session.get("jalankita_auth_access").value;
-  let endpoint = '';
-  if (access !== 'ALL') {
-    endpoint = `reports?access=${access}`;
-  } else {
-    endpoint = 'reports';
-  }
+  const endpoint = access !== 'ALL' ? `reports?access=${access}` : 'reports';
 
   return (
     <>

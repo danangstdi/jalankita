@@ -15,36 +15,23 @@ export default function LoginForm() {
   const handleSubmit = async (e) => {
     e.preventDefault();
 
-    const sendDataAuth = {
+    const sendData = {
       adminId: form.adminId,
       password: form.password,
     };
 
-    const sendDataLogAudit = {
-      adminId: form.adminId,
-      action: "Masuk ke sistem",
-    };
-
     try {
       setLoading(true);
-      const reqAuth = await fetch(`${process.env.NEXT_PUBLIC_BASEURL}/api/admin/auth`, {
+      const req = await fetch(`${process.env.NEXT_PUBLIC_BASEURL}/api/admin/auth`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
         },
-        body: JSON.stringify(sendDataAuth),
+        body: JSON.stringify(sendData),
       });
 
-      const reqLogAudit = await fetch(`${process.env.NEXT_PUBLIC_BASEURL}/api/logAudits`, {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify(sendDataLogAudit),
-      });
-
-      const res = await reqAuth.json();
-      if (reqAuth.ok && reqLogAudit.ok) {
+      const res = await req.json();
+      if (req.ok) {
         Toast("success", res.message);
         router.push('/beranda');
       } else {

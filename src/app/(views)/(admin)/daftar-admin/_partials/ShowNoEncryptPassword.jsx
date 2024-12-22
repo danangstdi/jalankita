@@ -14,7 +14,7 @@ export default function ShowNoEncryptPassword(props) {
         <input
           readOnly
           type={!showPassword ? 'password' : 'text'}
-          className="font-normal text-gray-800 bg-gray-300 w-20 text-center"
+          className="font-normal text-gray-800 bg-gray-300 w-24 text-center"
           value={props.noEncryptPassword}
         />
         <button type="button" name="btn-show-noEncryptPassword" onClick={() => setShowPassword(!showPassword)}>

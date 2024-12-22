@@ -1,6 +1,3 @@
-// "use client"
-
-// import { useState } from 'react'
 import Logo from '@/../public/svg Logo.svg'
 import Image from 'next/image'
 import LoginForm from './_partials/LoginForm'

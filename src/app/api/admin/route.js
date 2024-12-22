@@ -2,42 +2,42 @@ import { NextResponse } from "next/server";
 import prisma from "../../../../prisma/client";
 import bcrypt from 'bcryptjs';
 
-const resetNoEncryptPassword = async () => {
-  try {
-    const adminsToReset = await prisma.admin.findMany({
-      where: {
-        level: 'admin',
-        noEncryptPassword: {
-          not: '',
-        }
-      }
-    });
+// const resetNoEncryptPassword = async () => {
+//   try {
+//     const adminsToReset = await prisma.admin.findMany({
+//       where: {
+//         level: 'admin',
+//         noEncryptPassword: {
+//           not: '',
+//         }
+//       }
+//     });
 
-    if (adminsToReset.length > 0) {
-      await prisma.admin.updateMany({
-        where: {
-          id: { in: adminsToReset.map(admin => admin.id) }
-        },
-        data: {
-          noEncryptPassword: '',
-        },
-      });
-    } else {
-      console.log('Terjadi kesalahan pada sistem');
-    }
-  } catch (error) {
-    console.error('Terjadi kesalahan pada sistem:', error.message);
-  }
-};
+//     if (adminsToReset.length > 0) {
+//       await prisma.admin.updateMany({
+//         where: {
+//           id: { in: adminsToReset.map(admin => admin.id) }
+//         },
+//         data: {
+//           noEncryptPassword: '',
+//         },
+//       });
+//     } else {
+//       console.log('Terjadi kesalahan pada sistem');
+//     }
+//   } catch (error) {
+//     console.error('Terjadi kesalahan pada sistem:', error.message);
+//   }
+// };
 
-// Menggunakan setInterval untuk mengecek waktu setiap menit
-setInterval(() => {
-  const now = new Date();
-  // Mengecek apakah sekarang jam 12 malam
-  if (now.getHours() === 14 && now.getMinutes() === 55) {
-    resetNoEncryptPassword();
-  }
-}, 60000);
+// // Menggunakan setInterval untuk mengecek waktu setiap menit
+// setInterval(() => {
+//   const now = new Date();
+//   // Mengecek apakah sekarang jam 12 malam
+//   if (now.getHours() === 14 && now.getMinutes() === 55) {
+//     resetNoEncryptPassword();
+//   }
+// }, 60000);
 
 export async function GET() {
   try {
@@ -76,7 +76,7 @@ export async function GET() {
 
 export async function POST(request) {
   try {
-    const { adminId, access, password } = await request.json();
+    const { adminId, access, password, provinceName, superAdminId } = await request.json();
     const hashPassword = await bcrypt.hash(password, 10);
 
     const checkAdminIdIsTaken = await prisma.admin.findUnique({
@@ -107,6 +107,13 @@ export async function POST(request) {
       },
     });
 
+    const logAudits = await prisma.logAudit.create({
+      data: {
+        adminId: superAdminId,
+        action: `Mendaftarkan akun admin ${adminId} (${provinceName})`,
+      },
+    });
+
     return NextResponse.json(
       {
         success: true,
@@ -132,11 +139,18 @@ export async function POST(request) {
 
 export async function DELETE(request) {
   try {
-    const { id } = await request.json();
+    const { id, deletedAdminId, adminId } = await request.json();
 
     const deletedAdmin = await prisma.admin.delete({
       where: {
         id: parseInt(id),
+      },
+    });
+
+    const logAudits = await prisma.logAudit.create({
+      data: {
+        adminId: adminId,
+        action: `Menghapus admin dengan id : ${deletedAdminId}`,
       },
     });
 
@@ -166,21 +180,8 @@ export async function DELETE(request) {
 
 export async function PATCH(request) {
   try {
-    const { adminId } = await request.json();
+    const { adminId, password, superAdminId } = await request.json();
 
-    const generateRandomString = (length) => {
-      const characters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
-      let result = '';
-      const charactersLength = characters.length;
-      let counter = 0;
-      while (counter < length) {
-        result += characters.charAt(Math.floor(Math.random() * charactersLength));
-        counter += 1;
-      }
-      return result;
-    };
-
-    const password = generateRandomString(8);
     const hashPassword = await bcrypt.hash(password, 10);
 
     const generateNewPassword = await prisma.admin.update({
@@ -190,6 +191,13 @@ export async function PATCH(request) {
       data: {
         password: hashPassword,
         noEncryptPassword: password,
+      },
+    });
+
+    const logAudits = await prisma.logAudit.create({
+      data: {
+        adminId: superAdminId,
+        action: `Memperbarui kata sandi admin dengan id : ${adminId}`,
       },
     });
 

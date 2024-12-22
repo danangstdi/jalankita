@@ -5,23 +5,47 @@ import { getSessionClient } from "@/app/sevices/getSessionClient";
 import { useEffect } from "react";
 import Swal from "sweetalert2";
 
-const StatusSelector = ({ id }) => {
+const StatusSelector = ({ id, fullname }) => {
+  const statusMap = {
+    PENDING: "Menunggu",
+    PROGRESS: "Diproses",
+    RESOLVED: "Selesai",
+    REJECTED: "Ditolak",
+  };
+
   const handleColorSelection = async () => {
     const { value: reportStatus } = await Swal.fire({
       title: "Pilih Status",
       input: "select",
-      inputOptions: {
-          PENDING: "Menunggu",
-          PROGRESS: "Diproses",
-          RESOLVED: "Selesai",
-          REJECTED: "Ditolak"
-      },
+      inputOptions: statusMap,
+      // inputOptions: {
+      //     PENDING: "Menunggu",
+      //     PROGRESS: "Diproses",
+      //     RESOLVED: "Selesai",
+      //     REJECTED: "Ditolak"
+      // },
       inputPlaceholder: "Status Laporan",
       showCancelButton: true,
     });
-    if (reportStatus) { 
+
+    if (reportStatus) {
+      const reportStatusIndo = statusMap[reportStatus] || "Menunggu";
+
       try {
-        const resStatus = await fetch(`${process.env.NEXT_PUBLIC_BASEURL}/api/reports/${id}`,
+        // let reportStatusIndo = '';
+        // if (reportStatus == 'PROGRESS') {
+        //   reportStatusIndo = 'Diproses';
+        // } else if (reportStatus == 'RESOLVED') {
+        //   reportStatusIndo = 'Selesai';
+        // } else if (reportStatusIndo =='REJECTED') {
+        //   reportStatusIndo = 'Ditolak'
+        // } else {
+        //   reportStatusIndo = 'Menunggu'
+        // }
+
+        const adminId = getSessionClient('jalankita_auth_adminId');
+
+        const res = await fetch(`${process.env.NEXT_PUBLIC_BASEURL}/api/reports/${id}`,
           {
             method: "PATCH",
             headers: {
@@ -29,35 +53,16 @@ const StatusSelector = ({ id }) => {
             },
             body: JSON.stringify({
               id: id,
-              reportStatus: reportStatus
+              fullname: fullname,
+              reportStatus: reportStatus,
+              adminId: adminId,
+              reportStatusIndo: reportStatusIndo
             }),
           }
         );
 
-        let reportStatusIndo = '';
-        if (reportStatus == 'PROGRESS') {
-          reportStatusIndo = 'Diproses';
-        } else if (reportStatus == 'RESOLVED') {
-          reportStatusIndo = 'Selesai';
-        } else if (reportStatusIndo =='REJECTED') {
-          reportStatusIndo = 'Ditolak'
-        } else {
-          reportStatusIndo = 'Menunggu'
-        }
-        const sendDataLogAudit = {
-              adminId: getSessionClient('jalankita_auth_adminId'),
-              action: `Mengubah status laporan ${id} ke ${reportStatusIndo}`,
-            };
-        const resLogAudit = await fetch(`${process.env.NEXT_PUBLIC_BASEURL}/api/logAudits`, {
-              method: "POST",
-              headers: {
-                "Content-Type": "application/json",
-              },
-              body: JSON.stringify(sendDataLogAudit),
-            });
-  
-        if (resStatus.ok && resLogAudit.ok) {
-          localStorage.setItem("reportStatusUpdated", reportStatus);
+        if (res.ok) {
+          localStorage.setItem("reportStatusUpdated", reportStatusIndo);
           window.location.reload();
         } else {
           Toast('error', 'Terjadi kesalahan ketika mengubah status');

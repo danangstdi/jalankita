@@ -5,14 +5,8 @@ import { cookies } from "next/headers";
 export default async function Chart() {
   const session = await cookies();
   const access = session.get("jalankita_auth_access").value;
-
-  let endpoint = '';
-  if (access !== 'ALL') {
-    endpoint = `reports/charts?access=${access}`;
-  } else {
-    endpoint = 'reports/charts';
-  }
-
+      
+  const endpoint = access !== 'ALL' ? `reports/charts?access=${access}` : 'reports/charts';
   const dataReports = await getDataNoCache(`${process.env.NEXT_PUBLIC_BASEURL}/api/${endpoint}`);
   const months = dataReports.months;
   const values = dataReports.values;

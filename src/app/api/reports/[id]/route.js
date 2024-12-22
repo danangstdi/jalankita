@@ -38,13 +38,20 @@ export async function PATCH(request, { params }) {
   try {
     const id = parseInt(params.id);
 
-    const { reportStatus } = await request.json();
+    const { fullname, reportStatus, adminId, reportStatusIndo } = await request.json();
     const report = await prisma.report.update({
       where: {
         id,
       },
       data: {
         reportStatus: reportStatus,
+      },
+    });
+
+    const logAudits = await prisma.logAudit.create({
+      data: {
+        adminId: adminId,
+        action: `Mengubah status laporan ${id} oleh ${fullname} ke ${reportStatusIndo}`,
       },
     });
 

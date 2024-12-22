@@ -9,13 +9,8 @@ import NewReport from "./_partials/NewReport"
 export default async function Dashboard() {
   const session = await cookies();
   const access = session.get("jalankita_auth_access").value;
-  let endpoint = '';
-  if (access !== 'ALL') {
-    endpoint = `reports?access=${access}`;
-  } else {
-    endpoint = 'reports';
-  }
-
+  
+  const endpoint = access !== 'ALL' ? `reports?access=${access}` : 'reports';
   const reports = await getDataNoCache(`${process.env.NEXT_PUBLIC_BASEURL}/api/${endpoint}`)
 
   return (

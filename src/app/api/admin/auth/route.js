@@ -54,6 +54,13 @@ export async function POST(request) {
       path: '/',
     })
 
+    const logAudits = await prisma.logAudit.create({
+      data: {
+        adminId: adminId,
+        action: 'Masuk ke sistem',
+      },
+    });
+
     return NextResponse.json(
       {
         success: true,

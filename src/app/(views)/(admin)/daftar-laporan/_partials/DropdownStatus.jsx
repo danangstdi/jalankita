@@ -3,26 +3,30 @@
 import Link from "next/link";
 import { useState } from "react";
 
-export default function DropdownStatus(props) {
-  const [isOpenDropdownm, setIsOpenDropdown] = useState(false)
-  const reportStatus = props.reportStatus;
+export default function DropdownStatus({ reportStatus }) {
+  const [isOpenDropdown, setIsOpenDropdown] = useState(false)
 
-  let statusColor = "bg-white";
-  if (reportStatus == "Ditolak") {
-    statusColor = "bg-red-500"
-  } else if (reportStatus == "Menunggu") {
-    statusColor = "bg-gray-500";
-  } else if (reportStatus == "Diproses") {
-    statusColor = "bg-yellow-500";
-  } else if (reportStatus == "Selesai") {
-    statusColor = "bg-green-500"
-  } else {
-    statusColor = "bg-white";
-  }
+  const statusColors = {
+    Ditolak: "bg-red-500",
+    Menunggu: "bg-gray-500",
+    Diproses: "bg-yellow-500",
+    Selesai: "bg-green-500",
+    default: "bg-white",
+  };
+
+  const statusOptions = [
+    { text: "Semua", link: "/daftar-laporan", color: "bg-white" },
+    { text: "Menunggu", link: "/daftar-laporan/menunggu", color: "bg-gray-500" },
+    { text: "Diproses", link: "/daftar-laporan/diproses", color: "bg-yellow-500" },
+    { text: "Selesai", link: "/daftar-laporan/selesai", color: "bg-green-500" },
+    { text: "Ditolak", link: "/daftar-laporan/ditolak", color: "bg-red-500" },
+  ];
+
+  const statusColor = statusColors[reportStatus] || statusColors.default;
 
   return (
     <div>
-      <button type="button" id="btn-dropdown" onClick={() => setIsOpenDropdown(!isOpenDropdownm)} className="inline-flex items-center text-gray-500 bg-white border border-gray-300 focus:outline-none hover:bg-gray-100 focus:ring-4 focus:ring-gray-100 font-medium rounded-lg text-sm px-3 py-1.5">
+      <button type="button" id="btn-dropdown" onClick={() => setIsOpenDropdown(!isOpenDropdown)} className="inline-flex items-center text-gray-500 bg-white border border-gray-300 focus:outline-none hover:bg-gray-100 focus:ring-4 focus:ring-gray-100 font-medium rounded-lg text-sm px-3 py-1.5">
         <div className="flex justify-start items-center gap-2">
           <i className={`${statusColor} p-1 border border-gray-500 rounded-full`}></i>
           {reportStatus ? reportStatus : 'Semua'}
@@ -31,38 +35,16 @@ export default function DropdownStatus(props) {
           <path stroke="currentColor" strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="m1 1 4 4 4-4"/>
         </svg>
       </button>
-      <div id="dropdown-list" className={`${!isOpenDropdownm && 'hidden'} absolute z-10 bg-white divide-y divide-gray-100 rounded-lg shadow w-44`}>
+      <div id="dropdown-list" className={`${!isOpenDropdown && 'hidden'} absolute z-10 bg-white divide-y divide-gray-100 rounded-lg shadow w-44`}>
         <ul className="py-1 text-sm text-gray-700 shadow-lg">
-          <li>
-            <Link href="/daftar-laporan" className="py-2 hover:bg-gray-100 flex justify-start items-center gap-2 w-full">
-              <i className="p-1 ml-3 bg-white border border-gray-500 rounded-full"></i>
-              Semua
-            </Link>
-          </li>
-          <li>
-            <Link href="/daftar-laporan/menunggu" className="py-2 hover:bg-gray-100 flex justify-start items-center gap-2 w-full">
-              <i className="p-1 ml-3 bg-gray-500 border border-gray-500 rounded-full"></i>
-              Menunggu
-            </Link>
-          </li>
-          <li>
-            <Link href="/daftar-laporan/diproses" className="py-2 hover:bg-gray-100 flex justify-start items-center gap-2 w-full">
-              <i className="p-1 ml-3 bg-yellow-500 border border-gray-500 rounded-full"></i>
-              Diproses
-            </Link>
-          </li>
-          <li>
-            <Link href="/daftar-laporan/selesai" className="py-2 hover:bg-gray-100 flex justify-start items-center gap-2 w-full">
-              <i className="p-1 ml-3 bg-green-500 border border-gray-500 rounded-full"></i>
-              Selesai
-            </Link>
-          </li>
-          <li>
-            <Link href="/daftar-laporan/ditolak" className="py-2 hover:bg-gray-100 flex justify-start items-center gap-2 w-full">
-              <i className="p-1 ml-3 bg-red-500 border border-gray-500 rounded-full"></i>
-              Ditolak
-            </Link>
-          </li>
+          {statusOptions.map((option) => (
+            <li key={option.text}>
+              <Link href={option.link} className="py-2 hover:bg-gray-100 flex justify-start items-center gap-2 w-full">
+                <i className={`${option.color} p-1 ml-3 border border-gray-500 rounded-full`}></i>
+                {option.text}
+              </Link>
+            </li>
+          ))}
         </ul>
       </div>
     </div>

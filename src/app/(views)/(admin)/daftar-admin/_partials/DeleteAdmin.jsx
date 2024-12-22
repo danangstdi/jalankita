@@ -17,30 +17,20 @@ export default function DeleteAdmin(props) {
           try {
             const sendData = {
               id: props.adminIntId,
+              deletedAdminId: props.deletedAdminId,
+              adminId: getSessionClient('jalankita_auth_adminId')
             };
     
-            const resDelete = await fetch(`${process.env.NEXT_PUBLIC_BASEURL}/api/admin`, {
+            const req = await fetch(`${process.env.NEXT_PUBLIC_BASEURL}/api/admin`, {
               method: "DELETE",
               headers: {
                 "Content-Type": "application/json",
               },
               body: JSON.stringify(sendData),
             });
-
-            const sendDataLogAudit = {
-              adminId: getSessionClient('jalankita_auth_adminId'),
-              action: `Menghapus admin dengan id:${id}`,
-            };
-            await fetch(`${process.env.NEXT_PUBLIC_BASEURL}/api/logAudits`, {
-              method: "POST",
-              headers: {
-                "Content-Type": "application/json",
-              },
-              body: JSON.stringify(sendDataLogAudit),
-            });
       
-            const res = await resDelete.json();
-            if (resDelete.ok) {
+            const res = await req.json();
+            if (req.ok) {
               localStorage.setItem("adminDeleted", true);
               window.location.reload();
             } else {

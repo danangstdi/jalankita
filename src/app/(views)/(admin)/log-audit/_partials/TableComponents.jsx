@@ -10,9 +10,6 @@ export default async function TableComponents() {
       <table className="w-full text-sm text-left text-gray-500">
         <thead className="text-xs text-gray-700 bg-gray-50">
           <tr>
-            {/* <th scope="col" className="px-6 py-3 w-16">
-              NO
-            </th> */}
             <th scope="col" className="px-6 py-3">
               ADMIN
             </th>
@@ -31,9 +28,8 @@ export default async function TableComponents() {
                 Belum ada data masuk
               </td>
             </tr>
-          ) : logAudits.map((log, index) => (
+          ) : logAudits.map((log) => (
                 <tr key={log.id} className="bg-white border-b hover:bg-gray-50">
-                  {/* <td className="px-6 py-4 text-gray-900">{index + 1}</td> */}
                   <td scope="row" className="flex items-center px-6 py-4 text-gray-900 whitespace-nowrap">
                       <div className="text-base font-semibold">
                         {log.adminId}

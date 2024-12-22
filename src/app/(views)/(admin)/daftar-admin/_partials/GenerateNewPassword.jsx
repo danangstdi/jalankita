@@ -15,11 +15,25 @@ export default function GenerateNewPassword(props) {
         }).then(async (result) => {
           if (result.isConfirmed) {
             try {
+              const generateRandomString = (length = 8) => {
+                const characters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
+                let result = '';
+                const charactersLength = characters.length;
+                let counter = 0;
+                while (counter < length) {
+                  result += characters.charAt(Math.floor(Math.random() * charactersLength));
+                  counter += 1;
+                }
+                return result;
+              };
+
               const sendData = {
                 adminId: props.adminId,
+                password: generateRandomString(),
+                superAdminId: getSessionClient('jalankita_auth_adminId')
               };
       
-              const resGeneratePassword = await fetch(`${process.env.NEXT_PUBLIC_BASEURL}/api/admin`, {
+              const req = await fetch(`${process.env.NEXT_PUBLIC_BASEURL}/api/admin`, {
                 method: "PATCH",
                 headers: {
                   "Content-Type": "application/json",
@@ -27,20 +41,8 @@ export default function GenerateNewPassword(props) {
                 body: JSON.stringify(sendData),
               });
 
-              const sendDataLogAudit = {
-                adminId: getSessionClient('jalankita_auth_adminId'),
-                action: `Memperbarui kata sandi admin dengan id : ${props.adminId}`,
-              };
-              await fetch(`${process.env.NEXT_PUBLIC_BASEURL}/api/logAudits`, {
-                method: "POST",
-                headers: {
-                  "Content-Type": "application/json",
-                },
-                body: JSON.stringify(sendDataLogAudit),
-              });
-        
-              const res = await resGeneratePassword.json();
-              if (resGeneratePassword.ok) {
+              const res = await req.json();
+              if (req.ok) {
                 localStorage.setItem("generatedNewPassword", true);
                 window.location.reload();
               } else {

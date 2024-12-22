@@ -75,7 +75,7 @@ export default function AddAdmin() {
                 </ul>`
         });
        
-        const resAddAdmin = await fetch(`${process.env.NEXT_PUBLIC_BASEURL}/api/admin`,
+        const res = await fetch(`${process.env.NEXT_PUBLIC_BASEURL}/api/admin`,
           {
             method: "POST",
             headers: {
@@ -84,29 +84,18 @@ export default function AddAdmin() {
             body: JSON.stringify({
               adminId: adminId,
               access: provinceCode,
-              password: password
+              password: password,
+              provinceName: provinceName,
+              superAdminId: getSessionClient('jalankita_auth_adminId')
             }),
           }
         );
-
-        const sendDataLogAudit = {
-          adminId: getSessionClient('jalankita_auth_adminId'),
-          action: `Mendaftarkan akun admin ${adminId} (${provinceName})`,
-        };
-
-        const reqLogAudit = await fetch(`${process.env.NEXT_PUBLIC_BASEURL}/api/logAudits`, {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json",
-          },
-          body: JSON.stringify(sendDataLogAudit),
-        });
   
-        if (resAddAdmin.ok && reqLogAudit.ok) {
+        if (res.ok) {
           localStorage.setItem("addAdminToast", true);
           window.location.reload();
         } else {
-          const errorMessage = await resAddAdmin.json();
+          const errorMessage = await res.json();
           Toast('error', `Terjadi kesalahan: ${errorMessage.error}`);
         }
       }catch(err) {

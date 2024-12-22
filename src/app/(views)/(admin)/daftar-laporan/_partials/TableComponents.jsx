@@ -24,17 +24,20 @@ async function fetchLocationName(id, type) {
 export default async function TableComponents(props) {
   const getReports = await getDataNoCache(props.api);
   const reports = getReports.data;
+  const statusMap = {
+    PENDING: { text: "Menunggu", color: "bg-gray-500" },
+    PROGRESS: { text: "Proses", color: "bg-yellow-500" },
+    RESOLVED: { text: "Selesai", color: "bg-green-500" },
+    REJECTED: { text: "Ditolak", color: "bg-red-500" },
+  };
 
   const reportsWithLocationNames = await Promise.all(
     reports.map(async (report) => {
       const [provinceId, regencyId, districtId] = report.district.split(".");
       const [province, regency, district] = await Promise.all([
-        fetchLocationName(provinceId, "province"),
-        fetchLocationName(provinceId + "." + regencyId, "regency"),
-        fetchLocationName(
-          provinceId + "." + regencyId + "." + districtId,
-          "district"
-        ),
+        fetchLocationName(provinceId, "province").catch(() => "Provinsi Tidak Diketahui"),
+        fetchLocationName(provinceId + "." + regencyId, "regency").catch(() => "Kota/Kabupaten Tidak Diketahui"),
+        fetchLocationName(provinceId + "." + regencyId + "." + districtId, "district").catch(() => "Kecamatan/Kelurahan Tidak Diketahui"),
       ]);
 
       return {
@@ -93,17 +96,9 @@ export default async function TableComponents(props) {
                   </td>
                   <td className="px-6 py-4">
                     <div className="flex items-center">
-                      <div className={`h-2.5 w-2.5 rounded-full me-2 
-                        ${report.reportStatus === "PENDING" && "bg-gray-500"} 
-                        ${report.reportStatus === "PROGRESS" && "bg-yellow-500"} 
-                        ${report.reportStatus === "RESOLVED" && "bg-green-500"} 
-                        ${report.reportStatus === "REJECTED" && "bg-red-500"} 
-                        `}
+                      <div className={`h-2.5 w-2.5 rounded-full me-2 ${statusMap[report.reportStatus]?.color || 'bg-gray-500'}`}
                       ></div>
-                      {report.reportStatus === "PENDING" && "Menunggu"}
-                      {report.reportStatus === "PROGRESS" && "Proses"}
-                      {report.reportStatus === "RESOLVED" && "Selesai"}
-                      {report.reportStatus === "REJECTED" && "Ditolak"}
+                      {statusMap[report.reportStatus]?.text || 'Menunggu'}
                     </div>
                   </td>
                   <td className="px-6 py-4 flex gap-2">
@@ -112,7 +107,7 @@ export default async function TableComponents(props) {
                       detailPhoto={report.photo}
                       detailFullName={report.fullname}
                     />
-                    <StatusSelector id={report.id} />
+                    <StatusSelector id={report.id} fullname={report.fullname} />
                     <a href={`https://wa.me/${report.whatsapp}?text=Halo%20saya%20blablablabla`} target="_blank"
                       className="relative p-3 text-white overflow-hidden bg-slate-800 
                                 before:absolute before:py-20 before:px-40 before:w-[140%] before:-left-[20rem] before:-top-8 before:rounded-[5rem] before:bg-slate-700

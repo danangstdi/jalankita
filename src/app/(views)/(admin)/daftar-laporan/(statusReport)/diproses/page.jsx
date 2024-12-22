@@ -6,12 +6,7 @@ import AdminFooter from "@/app/components/AdminFooter";
 export default async function page() {
   const session = await cookies();
   const access = session.get("jalankita_auth_access").value;
-  let endpoint = '';
-  if (access !== 'ALL') {
-    endpoint = `reports/status?access=${access}&reportStatus=PROGRESS`;
-  } else {
-    endpoint = `reports/status?reportStatus=PROGRESS`;
-  }
+  const endpoint = access !== 'ALL' ? `reports/status?access=${access}&reportStatus=PROGRESS` : 'reports/status?reportStatus=PROGRESS';
 
   return (
     <>
