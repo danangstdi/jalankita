@@ -1,6 +1,7 @@
 "use client"
 
 import { Toast } from "@/app/components/Toast";
+import { getSessionClient } from "@/app/sevices/getSessionClient";
 import { useEffect } from "react";
 import Swal from "sweetalert2";
 
@@ -24,6 +25,19 @@ export default function DeleteAdmin(props) {
                 "Content-Type": "application/json",
               },
               body: JSON.stringify(sendData),
+            });
+
+            // const adminIdFromSession = document.cookie.split("; ").find((row) => row.startsWith("jalankita_auth_adminId="))?.split("=")[1];
+            const sendDataLogAudit = {
+              adminId: getSessionClient('jalankita_auth_adminId'),
+              action: `Menghapus admin dengan id:${id}`,
+            };
+            await fetch(`${process.env.NEXT_PUBLIC_BASEURL}/api/logAudits`, {
+              method: "POST",
+              headers: {
+                "Content-Type": "application/json",
+              },
+              body: JSON.stringify(sendDataLogAudit),
             });
       
             const res = await resDelete.json();

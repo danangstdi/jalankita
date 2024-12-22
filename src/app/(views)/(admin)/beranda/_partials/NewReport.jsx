@@ -15,7 +15,7 @@ export default function NewReport(props) {
         : latestReports.map((report, index) => (
           <Link key={report.id} href="/daftar-laporan">
             <div className='relative group mt-2 hover:cursor-pointer hover:duration-300'>
-              <img src={report.photo} alt="" className='w-full max-h-36 object-cover rounded-xl group-hover:brightness-75' />
+              <img src={report.photo} loading="lazy" alt="" className='w-full max-h-36 object-cover rounded-xl group-hover:brightness-75' />
               <div className="absolute inset-0 flex items-center justify-center opacity-0 group-hover:opacity-100 group-hover:duration-500 transition-opacity">
                 <span className="text-white px-4 py-2 text-sm">Selengkapnya</span>
               </div>

@@ -92,7 +92,7 @@ export default function DashboardNav(props) {
             <path d="M2.146 2.854a.5.5 0 1 1 .708-.708L8 7.293l5.146-5.147a.5.5 0 0 1 .708.708L8.707 8l5.147 5.146a.5.5 0 0 1-.708.708L8 8.707l-5.146 5.147a.5.5 0 0 1-.708-.708L7.293 8z"/>
           </svg>
         </button>
-        <Image src={Logo} alt='Logo JalanKita' className='h-12 w-auto px-4 lg:mt-10' loading='lazy' />
+        <Image src={Logo} alt='Logo JalanKita' className='h-12 w-auto px-4 lg:mt-10' />
         <ul className='mt-10 flex flex-col gap-2'>
           {filteredMenu.map((list) => (
             <li key={list.link}>

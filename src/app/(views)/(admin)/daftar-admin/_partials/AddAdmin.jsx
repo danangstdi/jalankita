@@ -1,6 +1,7 @@
 "use client"
 
 import { Toast } from "@/app/components/Toast";
+import { getSessionClient } from "@/app/sevices/getSessionClient";
 import { useEffect, useState } from "react";
 import Swal from "sweetalert2";
 
@@ -92,12 +93,12 @@ export default function AddAdmin() {
           }
         );
 
-        const superAdmin = document.cookie
-        .split("; ")
-        .find((row) => row.startsWith("jalankita_auth_adminId="))
-        ?.split("=")[1];
+        // const superAdmin = document.cookie
+        // .split("; ")
+        // .find((row) => row.startsWith("jalankita_auth_adminId="))
+        // ?.split("=")[1];
         const sendDataLogAudit = {
-          adminId: superAdmin,
+          adminId: getSessionClient('jalankita_auth_adminId'),
           action: `Mendaftarkan akun admin ${adminId} (${provinceName})`,
         };
 

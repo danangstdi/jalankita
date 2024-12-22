@@ -134,25 +134,11 @@ export async function POST(request) {
 export async function DELETE(request) {
   try {
     const { id } = await request.json();
-    const session = await cookies();
-    const adminIdFromSession = session.get('jalankita_auth_adminId').value;
 
     const deletedAdmin = await prisma.admin.delete({
       where: {
         id: parseInt(id),
       },
-    });
-
-    const sendDataLogAudit = {
-      adminId: adminIdFromSession,
-      action: `Menghapus admin dengan id:${id}`,
-    };
-    await fetch("https://jalankita.vercel.app/api/logAudits", {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify(sendDataLogAudit),
     });
 
     return NextResponse.json(
@@ -208,18 +194,6 @@ export async function PATCH(request) {
         password: hashPassword,
         noEncryptPassword: password,
       },
-    });
-
-    const sendDataLogAudit = {
-      adminId: adminIdFromSession,
-      action: `Memperbarui kata sandi admin dengan id:${id}`,
-    };
-    await fetch("https://jalankita.vercel.app/api/logAudits", {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify(sendDataLogAudit),
     });
 
     return NextResponse.json(
