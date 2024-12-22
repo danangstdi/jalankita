@@ -46,7 +46,7 @@ export default async function TableComponents(props) {
 
   return (
     <div className="overflow-x-auto shadow-md w-full sm:rounded-lg">
-      <div className="px-4 space-y-4 md:space-y-0 py-4 bg-white">
+      <div className="p-4 bg-white">
         <DropdownStatus reportStatus={props.setReportStatus} />
       </div>
       <table className="w-full text-sm text-left text-gray-500">

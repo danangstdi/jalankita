@@ -111,7 +111,7 @@ export async function POST(request) {
     return NextResponse.json(
       {
         success: true,
-        message: "Admin Created Successfully!",
+        message: "Sukses menambahkan admin!",
         data: admin,
       },
       {
@@ -122,7 +122,7 @@ export async function POST(request) {
     return NextResponse.json(
       { 
         success: false, 
-        message: "Failed to add admin", 
+        message: "Gagal menambahkan admin", 
         error: error.message },
       { 
         status: 500 
@@ -144,7 +144,7 @@ export async function DELETE(request) {
     return NextResponse.json(
       {
         success: true,
-        message: "Admin berhasil dihapus",
+        message: "Berhasil menghapus admin",
         data: deletedAdmin,
       },
       {
@@ -199,7 +199,7 @@ export async function PATCH(request) {
     return NextResponse.json(
       {
         success: true,
-        message: "Kata sandi baru berhasil digenerate",
+        message: "Berhasil memperbarui kata sandi",
         data: generateNewPassword,
       },
       {
@@ -210,7 +210,7 @@ export async function PATCH(request) {
     return NextResponse.json(
       {
         success: false,
-        message: "Kata sandi baru gagal digenerate",
+        message: "Gagal memperbarui kata sandi",
         error: error.message,
       },
       {

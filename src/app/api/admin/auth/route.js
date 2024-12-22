@@ -34,39 +34,22 @@ export async function POST(request) {
       );
     }
 
-    // const cookieValue = JSON.stringify({
-    //   adminId: getIdFromDb.adminId,
-    //   level: getIdFromDb.level,
-    //   access: getIdFromDb.access,
-    // });
-    // cookies().set('jalankita_auth_session_key', cookieValue, {
-    //   // httpOnly: true,
-    //   // secure: true,
-    //   sameSite: "strict",
-    //   path: "/",
-    //   // maxAge: 60 * 60 * 24,
-    // })
-
-    // alternative cookie :
     const session = await cookies();
     session.set({
       name: 'jalankita_auth_adminId',
       value: getIdFromDb.adminId,
-      // httpOnly: true,
       sameSite: "strict",
       path: '/',
     })
     session.set({
       name: 'jalankita_auth_level',
       value: getIdFromDb.level,
-      // httpOnly: true,
       sameSite: "strict",
       path: '/',
     })
     session.set({
       name: 'jalankita_auth_access',
       value: getIdFromDb.access,
-      // httpOnly: true,
       sameSite: "strict",
       path: '/',
     })
@@ -74,7 +57,7 @@ export async function POST(request) {
     return NextResponse.json(
       {
         success: true,
-        message: "Login Berhasil",
+        message: "Berhasil masuk ke sistem",
         data: { 
           adminId: getIdFromDb.adminId,
           level: getIdFromDb.level,
@@ -87,7 +70,7 @@ export async function POST(request) {
     return NextResponse.json(
       {
         success: false,
-        message: "Auth Failed",
+        message: "Gagal masuk ke sistem",
         error: error.message,
       },
       { status: 500 }

@@ -27,7 +27,6 @@ export default function DeleteAdmin(props) {
               body: JSON.stringify(sendData),
             });
 
-            // const adminIdFromSession = document.cookie.split("; ").find((row) => row.startsWith("jalankita_auth_adminId="))?.split("=")[1];
             const sendDataLogAudit = {
               adminId: getSessionClient('jalankita_auth_adminId'),
               action: `Menghapus admin dengan id:${id}`,
@@ -43,7 +42,6 @@ export default function DeleteAdmin(props) {
             const res = await resDelete.json();
             if (resDelete.ok) {
               localStorage.setItem("adminDeleted", true);
-              // Toast("success", res.message);
               window.location.reload();
             } else {
               Toast("error", res.message);

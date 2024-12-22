@@ -50,7 +50,7 @@ export async function POST(request) {
     return NextResponse.json(
       {
         success: true,
-        message: "Log audit Saved Successfully!",
+        message: "Berhasil mencatat Log Audit!",
         totalLogAudit: totalLogAudit,
         data: logAudits,
       },
@@ -62,7 +62,7 @@ export async function POST(request) {
     return NextResponse.json(
       { 
         success: false, 
-        message: "Failed to save Log Audit", 
+        message: "Gagal menyimpan Log Audit", 
         error: error.message },
       { 
         status: 500 

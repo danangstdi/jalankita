@@ -1,6 +1,7 @@
 "use client";
 
 import { Toast } from "@/app/components/Toast";
+import { getSessionClient } from "@/app/sevices/getSessionClient";
 import { useEffect } from "react";
 import Swal from "sweetalert2";
 
@@ -33,7 +34,6 @@ const StatusSelector = ({ id }) => {
           }
         );
 
-        const adminIdFromSession = document.cookie.split("; ").find((row) => row.startsWith("jalankita_auth_adminId="))?.split("=")[1];
         let reportStatusIndo = '';
         if (reportStatus == 'PROGRESS') {
           reportStatusIndo = 'Diproses';
@@ -45,7 +45,7 @@ const StatusSelector = ({ id }) => {
           reportStatusIndo = 'Menunggu'
         }
         const sendDataLogAudit = {
-              adminId: adminIdFromSession,
+              adminId: getSessionClient('jalankita_auth_adminId'),
               action: `Mengubah status laporan ${id} ke ${reportStatusIndo}`,
             };
         const resLogAudit = await fetch(`${process.env.NEXT_PUBLIC_BASEURL}/api/logAudits`, {

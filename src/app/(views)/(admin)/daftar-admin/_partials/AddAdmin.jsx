@@ -24,13 +24,11 @@ export default function AddAdmin() {
       .catch(err => console.log(err));
   }, []);
 
-  // Membuat inputOptions dengan kode provinsi sebagai key dan nama provinsi sebagai value
   const inputOptions = provinces.reduce((options, province) => {
-    options[province.kode] = province.nama;  // kode sebagai key, nama sebagai value
+    options[province.kode] = province.nama;
     return options;
   }, {});
 
-  // Fungsi untuk membuat string acak (adminId atau password)
   const generateRandomString = (length = 8) => {
     const characters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
     let result = '';
@@ -43,14 +41,12 @@ export default function AddAdmin() {
     return result;
   };
 
-  // Fungsi untuk generate adminId dan Password secara unik sebagai string
   const generateAdminIdAndPassword = () => {
-    let adminId = generateRandomString(8);  // adminId sebagai string acak 8 karakter
-    let password = generateRandomString(8); // password sebagai string acak 8 karakter
+    let adminId = generateRandomString(8);
+    let password = generateRandomString(8);
 
-    // Pastikan adminId dan password tidak sama
     while (adminId === password) {
-      password = generateRandomString(8);  // Generate password baru jika sama dengan adminId
+      password = generateRandomString(8);
     }
 
     return { adminId, password };
@@ -60,7 +56,7 @@ export default function AddAdmin() {
     const { value: provinceCode } = await Swal.fire({
       title: "Pilih Hak Akses Admin",
       input: "select",
-      inputOptions: inputOptions, // menggunakan inputOptions yang sudah disiapkan
+      inputOptions: inputOptions,
       inputPlaceholder: "Provinsi",
       showCancelButton: true,
       html: "<p class='text-xs p-3 bg-slate-200 text-left'>Kolom ID, AdminId, dan Password akan diisi otomatis.<p>",
@@ -93,10 +89,6 @@ export default function AddAdmin() {
           }
         );
 
-        // const superAdmin = document.cookie
-        // .split("; ")
-        // .find((row) => row.startsWith("jalankita_auth_adminId="))
-        // ?.split("=")[1];
         const sendDataLogAudit = {
           adminId: getSessionClient('jalankita_auth_adminId'),
           action: `Mendaftarkan akun admin ${adminId} (${provinceName})`,

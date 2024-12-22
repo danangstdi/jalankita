@@ -88,18 +88,6 @@ export default function Form() {
       if (res.ok) {
         localStorage.setItem("reportSubmitSuccessfully", true);
         window.location.reload();
-        // Toast("success", "Laporan berhasil dikirim");
-        // setForm({
-        //   fullname: "",
-        //   whatsapp: "",
-        //   // province: "",
-        //   // regency: "",
-        //   // district: "",
-        //   detail: "",
-        //   photo: "",
-        // });
-        // setFile(null);
-        // setFileAccepted(false);
       } else {
         console.log(`error: ${resBody.message}`);
         Toast("error", resBody.message);

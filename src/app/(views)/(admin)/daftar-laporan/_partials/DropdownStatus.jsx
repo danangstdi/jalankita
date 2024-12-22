@@ -19,11 +19,6 @@ export default function DropdownStatus(props) {
   } else {
     statusColor = "bg-white";
   }
-  // const [isStatus, setIsStatus] = useState({
-  //   status: false,
-  //   text: 'Show All',
-  //   color: 'bg-white'
-  // })
 
   return (
     <div>

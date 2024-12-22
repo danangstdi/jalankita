@@ -136,7 +136,7 @@ export async function POST(request) {
     return NextResponse.json(
       {
         success: true,
-        message: "Report Created Successfully!",
+        message: "Berhasil mengirim laporan!",
         totalReports: totalReports,
         totalPending: totalPending,
         totalProgress: totalProgress,

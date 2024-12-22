@@ -13,7 +13,7 @@ export async function GET(request, { params }) {
     return NextResponse.json(
       {
         sucess: true,
-        message: "Detail Report Not Found!",
+        message: "Detail laporan tidak ditemukan!",
         data: null,
       },
       {
@@ -51,7 +51,7 @@ export async function PATCH(request, { params }) {
     return NextResponse.json(
       {
         sucess: true,
-        message: "Report Status Updated!",
+        message: "Berhasil memperbarui status laporan!",
         data: report,
       },
       {
@@ -62,7 +62,7 @@ export async function PATCH(request, { params }) {
       return NextResponse.json(
         {
           sucess: false,
-          message: "Report Status Updated Failed",
+          message: "Gagal memperbarui status laporan",
           error: err,
         },
         {
