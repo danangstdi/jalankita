@@ -1,5 +1,5 @@
 import TentangAplikasi from "./_partials/TentangAplikasi";
-import TentangKami from "./_partials/tentangKami";
+import TentangKami from "./_partials/TentangKami";
 
 export default function Tentang() {
   return (
