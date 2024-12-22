@@ -29,7 +29,7 @@ export default function GenerateNewPassword(props) {
 
               const sendDataLogAudit = {
                 adminId: getSessionClient('jalankita_auth_adminId'),
-                action: `Memperbarui kata sandi admin dengan id:${id}`,
+                action: `Memperbarui kata sandi admin dengan id:${props.adminIntId}`,
               };
               await fetch(`${process.env.NEXT_PUBLIC_BASEURL}/api/logAudits`, {
                 method: "POST",
