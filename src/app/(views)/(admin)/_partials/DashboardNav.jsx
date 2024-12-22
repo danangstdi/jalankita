@@ -50,7 +50,7 @@ export default function DashboardNav(props) {
             throw new Error("adminId tidak ditemukan di cookie.");
           }
 
-          await fetch("https://jalankita.vercel.app/api/logAudits", {
+          await fetch(`${process.env.NEXT_PUBLIC_BASEURL}/api/logAudits`, {
             method: "POST",
             headers: {
               "Content-Type": "application/json",

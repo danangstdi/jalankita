@@ -20,7 +20,7 @@ const StatusSelector = ({ id }) => {
     });
     if (reportStatus) { 
       try {
-        const resStatus = await fetch(`https://jalankita.vercel.app/api/reports/${id}`,
+        const resStatus = await fetch(`${process.env.NEXT_PUBLIC_BASEURL}/api/reports/${id}`,
           {
             method: "PATCH",
             headers: {
@@ -48,7 +48,7 @@ const StatusSelector = ({ id }) => {
               adminId: adminIdFromSession,
               action: `Mengubah status laporan ${id} ke ${reportStatusIndo}`,
             };
-        const resLogAudit = await fetch("https://jalankita.vercel.app/api/logAudits", {
+        const resLogAudit = await fetch(`${process.env.NEXT_PUBLIC_BASEURL}/api/logAudits`, {
               method: "POST",
               headers: {
                 "Content-Type": "application/json",

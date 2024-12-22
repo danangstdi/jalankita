@@ -3,7 +3,7 @@ import React from 'react'
 export default function AdminFooter() {
   const currentYear = new Date().getFullYear();
   return (
-    <footer className='lg:ml-[19rem] text-center text-sm text-slate-600 py-5'>
+    <footer className='text-center text-slate-600 py-5 text-xs md:text-sm lg:ml-[19rem]'>
       Copyrights © {currentYear}. All rights reserved by <strong>JalanKita</strong>
     </footer>
   )
