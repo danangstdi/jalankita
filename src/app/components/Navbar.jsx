@@ -37,12 +37,12 @@ export default function Navbar() {
             <Image src={Logo} alt='Logo JalanKita' className='h-auto w-3/4' loading='lazy' />
           </li>
           <li className='flex rounded-md text-white hover:bg-slate-700 hover:duration-200 md:hover:bg-transparent md:hover:text-gray-300'>
-            <Link href='/' className='w-full h-11 flex items-center p-3 md:p-0 md:w-fit'>
+            <Link href='/tentang-jalankita' className='w-full h-11 flex items-center p-3 md:p-0 md:w-fit'>
               Tentang JalanKita
             </Link>
           </li>
           <li className='flex rounded-md text-white hover:bg-slate-700 hover:duration-200 md:hover:bg-transparent md:hover:text-gray-300'>
-            <Link href='/' className='w-full h-11 flex items-center p-3 md:p-0 md:w-fit'>
+            <Link href='/pusat-bantuan' className='w-full h-11 flex items-center p-3 md:p-0 md:w-fit'>
               Pusat Bantuan
             </Link>
           </li>
