@@ -1,7 +1,6 @@
 import { NextResponse } from "next/server";
 import prisma from "../../../../prisma/client";
 import bcrypt from 'bcryptjs';
-import { cookies } from "next/headers";
 
 const resetNoEncryptPassword = async () => {
   try {
@@ -168,8 +167,6 @@ export async function DELETE(request) {
 export async function PATCH(request) {
   try {
     const { id } = await request.json();
-    const session = await cookies();
-    const adminIdFromSession = session.get('jalankita_auth_adminId').value;
 
     const generateRandomString = (length) => {
       const characters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
