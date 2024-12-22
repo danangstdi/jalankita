@@ -16,7 +16,7 @@ export default function GenerateNewPassword(props) {
           if (result.isConfirmed) {
             try {
               const sendData = {
-                id: props.adminIntId,
+                adminId: props.adminId,
               };
       
               const resGeneratePassword = await fetch(`${process.env.NEXT_PUBLIC_BASEURL}/api/admin`, {
@@ -29,7 +29,7 @@ export default function GenerateNewPassword(props) {
 
               const sendDataLogAudit = {
                 adminId: getSessionClient('jalankita_auth_adminId'),
-                action: `Memperbarui kata sandi admin dengan id:${props.adminIntId}`,
+                action: `Memperbarui kata sandi admin dengan id:${props.adminId}`,
               };
               await fetch(`${process.env.NEXT_PUBLIC_BASEURL}/api/logAudits`, {
                 method: "POST",

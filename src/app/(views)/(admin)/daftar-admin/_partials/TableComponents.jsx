@@ -82,7 +82,7 @@ export default async function TableComponents() {
                     }
                   </td>
                   <td className="px-6 py-4 flex gap-2">
-                    <GenerateNewPassword adminIntId={admin.id}/>
+                    <GenerateNewPassword adminId={admin.adminId}/>
                     <DeleteAdmin adminIntId={admin.id}/>
                   </td>
                 </tr>

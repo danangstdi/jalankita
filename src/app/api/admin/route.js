@@ -166,7 +166,7 @@ export async function DELETE(request) {
 
 export async function PATCH(request) {
   try {
-    const { id } = await request.json();
+    const { adminId } = await request.json();
 
     const generateRandomString = (length) => {
       const characters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
@@ -185,7 +185,7 @@ export async function PATCH(request) {
 
     const generateNewPassword = await prisma.admin.update({
       where: {
-        id: parseInt(id),
+        adminId: adminId,
       },
       data: {
         password: hashPassword,
