@@ -34,7 +34,7 @@ const resetNoEncryptPassword = async () => {
 setInterval(() => {
   const now = new Date();
   // Mengecek apakah sekarang jam 12 malam
-  if (now.getHours() === 0 && now.getMinutes() === 0) {
+  if (now.getHours() === 14 && now.getMinutes() === 55) {
     resetNoEncryptPassword();
   }
 }, 60000);
