@@ -3,6 +3,7 @@ import AddAdmin from "./AddAdmin";
 import DeleteAdmin from "./DeleteAdmin";
 import GenerateNewPassword from "./GenerateNewPassword";
 import { FormatDate } from "@/app/components/FormatDate";
+import ShowNoEncryptPassword from "./ShowNoEncryptPassword";
 
 async function fetchLocationName(kode) {
   const provinceApi = `https://api.cahyadsn.com/province/${kode}`
@@ -63,11 +64,13 @@ export default async function TableComponents() {
                       <div className="text-base font-semibold">
                         {admin.adminId}
                       </div>
-                      <p className={`font-normal text-gray-500`}>
+                      {/* <p className={`font-normal text-gray-500`}>
                         Kata Sandi: {admin.noEncryptPassword == '' 
                         ? <span className="text-red-500">Terenkripsi</span> 
                         : admin.noEncryptPassword}
-                      </p>
+                      </p> */}
+                      <ShowNoEncryptPassword noEncryptPassword={admin.noEncryptPassword == '' 
+                                                ? 'Terenkripsi' : admin.noEncryptPassword}/>
                     </div>
                   </th>
                   <td className="px-6 py-4 text-slate-800">
