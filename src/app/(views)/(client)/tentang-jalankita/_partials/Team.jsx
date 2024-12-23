@@ -36,8 +36,8 @@ export default function Team() {
         {devs.map((dev) => (
           <li key={dev.name} className='flex flex-col justify-center items-center'>
             <Image src={dev.photo} quality={25} loading="lazy" alt={`Foto ${dev.name}`} className='h-24 w-24 overflow-hidden rounded-full shadow-xl lg:h-36 lg:w-36'/>
-            <p className="text-xs mt-3 font-semibold lg:mt-6 lg:text-sm">{dev.name}</p>
-            <p className="text-xs text-indigo-600 font-semibold lg:text-sm">{dev.role}</p>
+            <p className="text-xs text-center mt-3 font-semibold lg:mt-6 lg:text-sm">{dev.name}</p>
+            <p className="text-xs text-center text-indigo-600 font-semibold lg:text-sm">{dev.role}</p>
           </li>
         ))}
       </ul>

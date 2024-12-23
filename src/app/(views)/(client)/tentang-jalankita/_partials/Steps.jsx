@@ -36,7 +36,7 @@ export default function Steps() {
           </div>
         </div>
       ))}
-      <Image src={Mockup2} quality={40} loading="lazy" className='h-full w-fit -mb-24 lg:-mb-36 xl:-mb-32' alt='JalanKita - Layanan Digital Pengaduan Jaan Rusak'/>
+      <Image src={Mockup2} quality={40} loading="lazy" className='h-full w-fit -mb-20 lg:-mb-36 xl:-mb-32' alt='JalanKita - Layanan Digital Pengaduan Jaan Rusak'/>
     </div>
   </section>
   )
