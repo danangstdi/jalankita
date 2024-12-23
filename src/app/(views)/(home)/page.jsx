@@ -5,7 +5,7 @@ import Form from "./_partials/Form"
 export default function Home() {
   return (
     <>
-      <Navbar />
+      <Navbar pageNav='Kirim Laporan'/>
       <main className='pb-20'>
         <Hero/>
         <Form/>
