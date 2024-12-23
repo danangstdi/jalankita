@@ -20,7 +20,7 @@ const HelpCenter = () => {
           </p>
           <div className="space-y-4">
             {contactList.map((contact) => (
-              <div className="flex items-center p-4 bg-slate-100 rounded-lg shadow-sm hover:shadow-md">
+              <div key={contact.label} className="flex items-center p-4 bg-slate-100 rounded-lg shadow-sm hover:shadow-md">
                 <img
                   src={contact.icon}
                   alt={contact.label}
