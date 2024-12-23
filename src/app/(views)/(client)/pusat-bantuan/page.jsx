@@ -2,6 +2,11 @@ import Navbar from "@/app/components/Navbar";
 
 const HelpCenter = () => {
   const currentYear = new Date().getFullYear();
+  const contactList = [
+    {label: 'Whatsapp', value: '+62 8953557707877', icon: 'https://img.icons8.com/ios-filled/50/4caf50/whatsapp.png'},
+    {label: 'Email', value: 'jalankita@gmail.com', icon: 'https://img.icons8.com/ios-filled/50/1a73e8/email.png'},
+  ]
+
   return (
     <>
       <Navbar pageNav='Pusat Bantuan'/>
@@ -14,40 +19,26 @@ const HelpCenter = () => {
             Kami siap membantu Anda! Hubungi kami melalui saluran berikut:
           </p>
           <div className="space-y-4">
-            <div className="flex items-center justify-between p-4 bg-slate-100 rounded-lg shadow-sm hover:shadow-md">
-              <div className="flex items-center">
+            {contactList.map((contact) => (
+              <div className="flex items-center p-4 bg-slate-100 rounded-lg shadow-sm hover:shadow-md">
                 <img
-                  src="https://img.icons8.com/ios-filled/50/4caf50/whatsapp.png"
-                  alt="WhatsApp"
+                  src={contact.icon}
+                  alt={contact.label}
                   className="h-8 w-8 mr-4"
                 />
-                <span className="text-lg font-medium">WhatsApp</span>
+              <div className="flex flex-col md:flex-row md:items-center md:justify-between w-full">
+                <span className="text-lg font-medium">{contact.label}</span>
+                <a
+                  href="https://wa.me/6281234567890"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="text-blue-500 text-sm hover:underline md:text-base"
+                >
+                  {contact.value}
+                </a>
               </div>
-              <a
-                href="https://wa.me/6281234567890"
-                target="_blank"
-                rel="noopener noreferrer"
-                className="text-blue-500 hover:underline"
-              >
-                +62 8953557707877
-              </a>
             </div>
-            <div className="flex items-center justify-between p-4 bg-slate-100 rounded-lg shadow-sm hover:shadow-md">
-              <div className="flex items-center">
-                <img
-                  src="https://img.icons8.com/ios-filled/50/1a73e8/email.png"
-                  alt="Gmail"
-                  className="h-8 w-8 mr-4"
-                />
-                <span className="text-lg font-medium">Email</span>
-              </div>
-              <a
-                href="mailto:helpcenter@gmail.com"
-                className="text-blue-500 hover:underline"
-              >
-                jalankita@gmail.com
-              </a>
-            </div>
+            ))}
           </div>
         </div>
       </div>
